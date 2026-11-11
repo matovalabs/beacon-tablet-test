@@ -1,6 +1,6 @@
 # Beacon tablet test
 
-Beacon is an early test of a reading practice app for children, made by Matova. This page is for the families we invited to try it.
+Beacon is an early test of a learning app for children in grades 1 to 12 (ages 6 to 18), made by Matova. Children practice reading, math, science and social studies. This page is for the families we invited to try it.
 
 Beacon sends nothing to us or to anyone else. Your child's results stay on your tablet.
 
@@ -10,23 +10,25 @@ Beacon sends nothing to us or to anyone else. Your child's results stay on your 
 <img src="screenshots/ipad-lumis-cliff.png" width="250" alt="Lumi's cliff on an iPad: Lumi the lighthouse stands on a grassy cliff with a kite, flags, a telescope and a sailboat added as the child read.">
 </p>
 
-## New in version 0.5.0
+## New in version 0.6.0
 
-- A weekly reading goal of 3 days, a small keepsake for the first text each day, and Lumi's cliff, which gains something new as your child reads. Missing a day takes nothing away.
-- On Android tablets, a grown-up can turn on one daily reminder (Grown-ups, then Settings and privacy). It is off unless you turn it on, and the tablet asks you to allow notifications the first time.
+- Every grade from 1 to 12, with one level per grade (12 levels instead of 10).
+- Four subjects: reading, math, science and social studies. A grown-up picks which subjects a child has, and the child chooses the subject each day.
+- New texts for grades 11 and 12 and the first science texts for grades 1 to 10. Texts are early drafts that a teacher has not reviewed yet; tell us if anything looks wrong.
+- Smoother walking for the guides and new celebration clips, a press and hold word helper, level labels on the progress chart, and fixes from our own testing.
 
 ## Install on an Android or Amazon Fire tablet
 
-1. On the tablet, tap this link to download the app: [Beacon-test-0.5.0.apk](https://github.com/Irlewis91/beacon-tablet-test/releases/download/v0.5.0-preview/Beacon-test-0.5.0.apk) (46 MB).
+1. On the tablet, tap this link to download the app: [Beacon-test-0.6.0.apk](https://github.com/matovalabs/beacon-tablet-test/releases/download/v0.6.0-preview/Beacon-test-0.6.0.apk) (46 MB).
 2. Open the downloaded file. The tablet asks whether to allow installs from the app you used to open it (for example Chrome or Files). Allow it, go back, and tap Install. On a Fire tablet the setting is under Settings > Security & Privacy > Apps from Unknown Sources.
 3. If a warning says the app comes from an unknown developer, tap More details, then Install anyway. It is our test app, and it is not in the Play Store yet.
 4. Open Beacon from the home screen. You can turn the install setting back off afterwards.
 
-Already have version 0.4.0? Install 0.5.0 the same way. It replaces the old version and keeps your child's progress.
+Already have an older version? Install 0.6.0 the same way. It replaces the old version and keeps your child's progress.
 
 ## Use it on an iPad
 
-1. On the iPad, open this link in Safari: https://irlewis91.github.io/beacon-tablet-test/
+1. On the iPad, open this link in Safari: https://matovalabs.github.io/beacon-tablet-test/
 2. Tap the Share button (the square with an arrow, at the top). If you do not see Add to Home Screen, tap View More. Tap Add to Home Screen, then Add.
 3. From now on, open Beacon from its icon on the Home Screen, not from Safari. Your child's progress is saved with that icon. In a Safari tab, Safari may clear saved progress after about a week without a visit.
 
@@ -38,4 +40,4 @@ Open Beacon, tap Grown-ups, then Settings and privacy, then Clear data. On an An
 
 Questions: ian@matovagroup.com
 
-Checksum (SHA-256) of version 0.5.0, for anyone who wants to check the file: `d46e1499ddc6e5ef4ec6e7996d9417cee3ba73ee62524e56d8f423665f1876ca`
+Checksum (SHA-256) of version 0.6.0, for anyone who wants to check the file: `8cda7893523f85d980a5c10b5b87d74dfbf92c07e3989bc900bd57fc8a057a5e`
