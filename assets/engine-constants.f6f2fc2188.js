@@ -2,7 +2,8 @@
 
 // Section 4: levels and scoring
 export const LEVEL_MIN = 1;
-export const LEVEL_MAX = 10;
+// Levels 1 to 12 match grades 1 to 12 (changed from 10 levels on November 10, 2026).
+export const LEVEL_MAX = 12;
 export const UP_AT = 0.85;
 export const DOWN_BELOW = 0.60;
 export const QUEST_QUESTIONS = 8;

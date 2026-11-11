@@ -1,14 +1,14 @@
 // Quest run: logic spec section 7. reading -> dump -> q1 ... q8 (each with feedback) -> summary.
 // The quest lives in memory until it finishes. An unfinished quest is dropped and changes nothing.
-import { QUEST_QUESTIONS } from './engine-constants.cab3bd2c6e.js';
-import { subjectFor, subjectOf } from './engine-subjects.0b823f9641.js';
-import { levelOf } from './engine-select.092d6f8319.js';
-import { nextLevel } from './engine-levels.eb643f0433.js';
+import { QUEST_QUESTIONS } from './engine-constants.f6f2fc2188.js';
+import { subjectFor, subjectOf } from './engine-subjects.b9c5ff3bf4.js';
+import { levelOf, nextQuestNumber } from './engine-select.dcc6fcf48a.js';
+import { nextLevel } from './engine-levels.3311cee783.js';
 
 export class QuestRun {
   constructor({ learner, choice, kind, telemetry, clock, newId }) {
     this.learnerId = learner.id;
-    this.n = (learner.quests || []).length + 1;
+    this.n = nextQuestNumber(learner);
     this.kind = kind;
     this.choice = choice;
     this.passage = choice.passage;

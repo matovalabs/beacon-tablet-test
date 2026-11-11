@@ -6,8 +6,8 @@
 // The design rules and their evidence are in docs/literacy-evidence.md. Nothing the child picks or
 // selects is stored: the quest keeps only a count of helper taps (section 8 of the logic spec).
 import { h, icon, clear } from './ui-dom.43bde315e2.js';
-import { button, character } from './ui-common.753749d5dd.js';
-import { WORDS } from './text-copy.0ed1103432.js';
+import { button, character } from './ui-common.4acae333f8.js';
+import { WORDS } from './text-copy.5e71bb1047.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
 
 let player = null;
@@ -57,7 +57,7 @@ export function passageBody(app, passage, onWord) {
       if (re) for (const m of par.matchAll(re)) {
         p.append(par.slice(last, m.index));
         const e = map.get(m[0].toLowerCase());
-        p.append(h('button', { class: 'word', type: 'button', 'aria-label': `${m[0]}: ${WORDS.askLabel}`, onclick: () => onWord(e) }, m[0]));
+        p.append(h('button', { class: 'word', type: 'button', 'aria-haspopup': 'dialog', title: WORDS.askLabel, onclick: () => onWord(e) }, m[0]));
         last = m.index + m[0].length;
       }
       p.append(par.slice(last));
@@ -74,6 +74,15 @@ export function passageBody(app, passage, onWord) {
     else asked.append(h('p', { class: 'muted small', text: WORDS.notInList }));
   };
   for (const ev of ['mouseup', 'touchend', 'keyup']) body.addEventListener(ev, () => setTimeout(check, 30));
+  // A long press on a tablet selects without a touchend on the text, so also follow selectionchange.
+  // The listener removes itself once this text leaves the screen.
+  let timer = 0;
+  const onSel = () => {
+    if (!body.isConnected) { document.removeEventListener('selectionchange', onSel); return; }
+    clearTimeout(timer);
+    timer = setTimeout(check, 250);
+  };
+  document.addEventListener('selectionchange', onSel);
   return h('div', {}, body, asked);
 }
 

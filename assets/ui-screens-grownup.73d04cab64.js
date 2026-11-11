@@ -1,21 +1,22 @@
 // The Grown-up area: gate, Reports, Progress, Interests, Settings and privacy, Readers (section 12).
 import { h, s, icon } from './ui-dom.43bde315e2.js';
-import { screen, eyebrow, button, confirmDialog, formatDate, interestLabel, topicLabel, passageTitle, hasCheckin } from './ui-common.753749d5dd.js';
-import { interestEditor, subjectEditor, noticeView } from './ui-screens-onboard.0d8dbb7cf1.js';
-import { GATE, GROWNUP, T2, C3 } from './text-copy.0ed1103432.js';
-import { buildReport, skillTotals, SKILL_NAMES, skillsFor, PROGRESS_HONEST, CLIPBOARD_LINE } from './text-report-text.a7ee858e1a.js';
-import { subjectFor, learnerSubjects } from './engine-subjects.0b823f9641.js';
-import { levelOf } from './engine-select.092d6f8319.js';
-import { SUBJECTS_COPY, SETTINGS_MEDIA } from './text-copy.0ed1103432.js';
-import { exportSummary } from './state-summary.aeb88fecf1.js';
-import { checkNick, checkGrade } from './engine-nick.b7bb440f66.js';
-import { changeGrade } from './engine-interests.d8832851c1.js';
-import { MAX_LEARNERS } from './engine-constants.cab3bd2c6e.js';
-import { reminderSettings, syncReminder } from './ui-reminder.8b85a941d4.js';
+import { screen, eyebrow, button, confirmDialog, formatDate, interestLabel, topicLabel, passageTitle, hasCheckin } from './ui-common.4acae333f8.js';
+import { interestEditor, subjectEditor, noticeView } from './ui-screens-onboard.1d2febe22e.js';
+import { GATE, GROWNUP, T2, C3 } from './text-copy.5e71bb1047.js';
+import { buildReport, skillTotals, SKILL_NAMES, skillsFor, PROGRESS_HONEST, CLIPBOARD_LINE } from './text-report-text.b1d09bb2dc.js';
+import { subjectFor, learnerSubjects } from './engine-subjects.b9c5ff3bf4.js';
+import { levelOf } from './engine-select.dcc6fcf48a.js';
+import { SUBJECTS_COPY, SETTINGS_MEDIA } from './text-copy.5e71bb1047.js';
+import { exportSummary } from './state-summary.5fd4a894e6.js';
+import { checkNick, checkGrade, nickTaken } from './engine-nick.095b899fd9.js';
+import { changeGrade } from './engine-interests.7dd0456ab8.js';
+import { MAX_LEARNERS, LEVEL_MAX } from './engine-constants.f6f2fc2188.js';
+import { reminderSettings, syncReminder } from './ui-reminder.a8894c8223.js';
 
 // The gate: a new multiplication each time. It stops a young child by accident; it is not security.
 function newSum() {
-  const a = 3 + Math.floor(Math.random() * 7);
+  // 12 to 19 times 3 to 9: quick for a grown-up, past the times tables a 9 year old knows by heart.
+  const a = 12 + Math.floor(Math.random() * 8);
   const b = 3 + Math.floor(Math.random() * 7);
   return { a, b };
 }
@@ -45,12 +46,19 @@ export function gate(app) {
     h('button', { class: 'btn key', type: 'button', 'aria-label': GATE.clear, onclick: () => { entry = entry.slice(0, -1); paint(); } }, icon('back')),
     button('0', () => press('0'), 'key'),
     button(GATE.ok, submit, 'key primary'));
-  return screen('parent',
+  const view = screen('parent',
     h('h1', { text: GATE.title }),
     h('p', { text: GATE.lead }),
     qEl, shown, msg, pad,
     h('p', { class: 'muted small', text: GATE.note }),
     button(GATE.cancel, () => app.go('today'), 'text'));
+  // A keyboard works too: digits, Backspace and Enter.
+  view.addEventListener('keydown', e => {
+    if (/^[0-9]$/.test(e.key)) { press(e.key); e.preventDefault(); }
+    else if (e.key === 'Backspace') { entry = entry.slice(0, -1); paint(); e.preventDefault(); }
+    else if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') { submit(); e.preventDefault(); }
+  });
+  return view;
 }
 
 function shell(app, tab, ...kids) {
@@ -128,7 +136,8 @@ function reportView(app, id) {
     h('a', { class: 'link', href: '#/grownup/interests', text: GROWNUP.changeInterests }),
     h('h2', { text: GROWNUP.limits }),
     h('p', { class: 'muted', text: rep.limits }),
-    rep.suspect ? h('p', { class: 'muted', text: rep.suspect }) : null);
+    rep.suspect ? h('p', { class: 'muted', text: rep.suspect }) : null,
+    typeof window.print === 'function' ? button(GROWNUP.print, () => window.print(), 'secondary no-print') : null);
 }
 
 function skillLine(rows, subject) {
@@ -137,10 +146,12 @@ function skillLine(rows, subject) {
 }
 
 function levelChart(quests) {
-  const w = 300, hgt = 120, pad = 18;
-  const pts = quests.map((q, i) => [pad + (quests.length === 1 ? 0 : (i * (w - 2 * pad)) / (quests.length - 1)), hgt - pad - ((q.levelEnd - 1) * (hgt - 2 * pad)) / 9]);
+  const w = 300, hgt = 120, pad = 18, left = 52;
+  const yFor = lv => hgt - pad - ((lv - 1) * (hgt - 2 * pad)) / (LEVEL_MAX - 1);
+  const pts = quests.map((q, i) => [left + (quests.length === 1 ? 0 : (i * (w - left - pad)) / (quests.length - 1)), yFor(q.levelEnd)]);
   return s('svg', { class: 'chart', viewBox: `0 0 ${w} ${hgt}`, role: 'img', 'aria-label': `Level after each quest: ${quests.map(q => q.levelEnd).join(', ')}` },
-    s('line', { x1: pad, y1: hgt - pad, x2: w - pad, y2: hgt - pad, class: 'axis' }),
+    s('line', { x1: left, y1: hgt - pad, x2: w - pad, y2: hgt - pad, class: 'axis' }),
+    [1, 6, LEVEL_MAX].map(lv => s('text', { x: left - 8, y: yFor(lv) + 4, class: 'tick', 'text-anchor': 'end', 'aria-hidden': 'true' }, `Level ${lv}`)),
     s('polyline', { points: pts.map(p => p.join(',')).join(' '), class: 'line', fill: 'none' }),
     pts.map((p, i) => s('circle', { cx: p[0], cy: p[1], r: 4, class: 'dot' }, s('title', {}, `Quest ${i + 1}: level ${quests[i].levelEnd}`))));
 }
@@ -268,9 +279,10 @@ function learners(app) {
       const grade = h('select', { id: `grade-${l.id}` }, Array.from({ length: 12 }, (_, i) => h('option', { value: String(i + 1), selected: l.grade === i + 1, text: T2.gradeOption(i + 1) })));
       const msg = h('p', { class: 'msg', role: 'status', 'aria-live': 'polite' });
       const saveIt = () => {
-        const n = checkNick(nick.value);
+        let n = checkNick(nick.value);
+        if (n.ok && nickTaken(n.nick, st.learners, l.id)) n = { ok: false, reason: 'taken' };
         const g = checkGrade(grade.value);
-        if (!n.ok) { msg.textContent = n.reason === 'long' ? T2.nickLong : T2.nickError; nick.focus(); return; }
+        if (!n.ok) { msg.textContent = n.reason === 'long' ? T2.nickLong : n.reason === 'taken' ? T2.nickTaken : T2.nickError; nick.focus(); return; }
         app.store.updateLearner(l.id, x => {
           const renamed = { ...x, nick: n.nick };
           return g.grade === x.grade ? renamed : changeGrade(renamed, g.grade, app.data.INTERESTS, app.clock.nowIso());

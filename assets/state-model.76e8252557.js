@@ -1,7 +1,7 @@
 // The saved model: logic spec section 3. validateState rejects any field outside it.
-import { STATE_VERSION, MAX_LEARNERS, MAX_QUESTS, LEVEL_MIN, LEVEL_MAX, REMINDER_FIRST_HOUR, REMINDER_LAST_HOUR, REMINDER_DEFAULT_HOUR } from './engine-constants.cab3bd2c6e.js';
+import { STATE_VERSION, MAX_LEARNERS, MAX_QUESTS, LEVEL_MIN, LEVEL_MAX, REMINDER_FIRST_HOUR, REMINDER_LAST_HOUR, REMINDER_DEFAULT_HOUR } from './engine-constants.f6f2fc2188.js';
 import { readingDaysFrom } from './engine-retention.44d90a9335.js';
-import { SUBJECT_IDS, ALL_SKILLS } from './engine-subjects.0b823f9641.js';
+import { SUBJECT_IDS, ALL_SKILLS } from './engine-subjects.b9c5ff3bf4.js';
 
 const KEYS = {
   state: ['version', 'consent', 'settings', 'learners', 'activeLearnerId'],
@@ -81,7 +81,7 @@ function checkQuest(errors, w, q) {
   if (!isStr(q.id) || !isInt(q.n) || !isStr(q.at) || !['checkin', 'quest'].includes(q.kind)) errors.push(`${w} has a bad id, n, at or kind`);
   if (!SUBJECT_IDS.includes(q.subject)) errors.push(`${w}.subject must be a known subject`);
   if (!isStr(q.passageId) || !isStr(q.topic) || !(q.interestId === null || isStr(q.interestId)) || !isBool(q.repeat)) errors.push(`${w} has a bad passage, topic, interest or repeat`);
-  for (const k of ['levelStart', 'levelEnd']) if (!isInt(q[k]) || q[k] < LEVEL_MIN || q[k] > LEVEL_MAX) errors.push(`${w}.${k} must be 1 to 10`);
+  for (const k of ['levelStart', 'levelEnd']) if (!isInt(q[k]) || q[k] < LEVEL_MIN || q[k] > LEVEL_MAX) errors.push(`${w}.${k} must be ${LEVEL_MIN} to ${LEVEL_MAX}`);
   if (!isInt(q.right) || q.of !== 8 || q.right < 0 || q.right > 8) errors.push(`${w} has a bad score`);
   if (!Array.isArray(q.rows) || q.rows.length !== 8) errors.push(`${w}.rows must have 8 rows`);
   else q.rows.forEach((r, i) => checkRow(errors, `${w}.rows[${i}]`, r));
@@ -94,7 +94,7 @@ function checkLearner(errors, w, l) {
   if (!Array.isArray(l.subjects) || !l.subjects.every(x => SUBJECT_IDS.includes(x)) || new Set(l.subjects).size !== l.subjects.length) errors.push(`${w}.subjects must be a list of known subjects`);
   if (!SUBJECT_IDS.includes(l.subject)) errors.push(`${w}.subject must be a known subject`);
   if (!isObj(l.levels)) errors.push(`${w}.levels must be an object`);
-  else for (const [k, v] of Object.entries(l.levels)) if (!SUBJECT_IDS.includes(k) || !isInt(v) || v < LEVEL_MIN || v > LEVEL_MAX) errors.push(`${w}.levels must map subjects to 1 to 10`);
+  else for (const [k, v] of Object.entries(l.levels)) if (!SUBJECT_IDS.includes(k) || !isInt(v) || v < LEVEL_MIN || v > LEVEL_MAX) errors.push(`${w}.levels must map subjects to ${LEVEL_MIN} to ${LEVEL_MAX}`);
   if (!Array.isArray(l.interests) || !l.interests.every(isStr) || !isBool(l.surprise)) errors.push(`${w} has bad interests`);
   if (!Array.isArray(l.interestLog)) errors.push(`${w}.interestLog must be a list`);
   else l.interestLog.forEach((e, i) => {

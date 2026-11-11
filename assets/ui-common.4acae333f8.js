@@ -1,6 +1,6 @@
 // Pieces shared by several screens.
 import { h, icon } from './ui-dom.43bde315e2.js';
-import { bandForGrade } from './engine-interests.d8832851c1.js';
+import { bandForGrade } from './engine-interests.7dd0456ab8.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
 
 // Alt text from the character bible, section 8.

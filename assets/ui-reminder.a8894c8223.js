@@ -2,8 +2,8 @@
 // the saved setting to the app, which schedules one quiet notification a day on the device. Nothing is sent
 // anywhere. In a browser there is no bridge, so the setting is not shown.
 import { h } from './ui-dom.43bde315e2.js';
-import { REMINDER } from './text-copy.0ed1103432.js';
-import { REMINDER_FIRST_HOUR, REMINDER_LAST_HOUR } from './engine-constants.cab3bd2c6e.js';
+import { REMINDER } from './text-copy.5e71bb1047.js';
+import { REMINDER_FIRST_HOUR, REMINDER_LAST_HOUR } from './engine-constants.f6f2fc2188.js';
 
 function bridge() {
   const handlers = globalThis.webkit && globalThis.webkit.messageHandlers;

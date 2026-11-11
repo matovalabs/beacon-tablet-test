@@ -1,6 +1,6 @@
 // Milestones: small recognitions of effort and progress. No streaks, no ranks, nothing lost by
 // skipping a day. Each one is earned once. The wording lives in src/text/copy.js (MILESTONES).
-import { SUBJECT_IDS } from './engine-subjects.0b823f9641.js';
+import { SUBJECT_IDS } from './engine-subjects.b9c5ff3bf4.js';
 
 const subjectOf = q => q.subject || 'reading';
 const sum = (qs, f) => qs.reduce((n, q) => n + q.rows.reduce((m, r) => m + f(r), 0), 0);

@@ -1,7 +1,7 @@
 // School subjects. The child picks one or more before the first check-in (Ian, October 11, 2026).
 // Every subject runs the same quest: one text and 8 questions, two per skill, with its own level.
 // Science and social studies use the reading skills; math has its own four.
-import { SKILL_ORDER } from './engine-constants.cab3bd2c6e.js';
+import { SKILL_ORDER } from './engine-constants.f6f2fc2188.js';
 
 export const SUBJECT_IDS = ['reading', 'math', 'science', 'social'];
 

@@ -1,26 +1,26 @@
 // C6 Today, My interests and subjects, Switch reader, and the quest run (section 7).
 import { h, s, icon, clear } from './ui-dom.43bde315e2.js';
-import { passageBody, wordCard, openWordHelp, stopVoice } from './ui-word-help.4340d6a1fc.js';
-import { stage, celebrate } from './ui-stage.2de2950010.js';
-import { award } from './engine-milestones.8771d03120.js';
+import { passageBody, wordCard, openWordHelp, stopVoice } from './ui-word-help.847b05b719.js';
+import { stage, celebrate } from './ui-stage.7026a28f6d.js';
+import { award } from './engine-milestones.1beec5fbec.js';
 import { countReadingDay, keepsakeFor, newlyUnlocked } from './engine-retention.44d90a9335.js';
-import { weekCard, rewardsCard } from './ui-rewards.a4c6e969dd.js';
-import { screen, eyebrow, button, character, topbar, progressBar, confirmDialog, interestLabel, topicLabel, hasCheckin } from './ui-common.753749d5dd.js';
+import { weekCard, rewardsCard } from './ui-rewards.c58763a904.js';
+import { screen, eyebrow, button, character, topbar, progressBar, confirmDialog, interestLabel, topicLabel, hasCheckin } from './ui-common.4acae333f8.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
-import { interestEditor, subjectEditor } from './ui-screens-onboard.0d8dbb7cf1.js';
-import { TODAY, READ, DUMP, QUESTION, FEEDBACK, SUMMARY, SKILL_KID, SKILL_EYEBROW, C3, BANNERS, SUBJECTS_COPY, MILESTONES, CELEBRATE } from './text-copy.0ed1103432.js';
-import { chooseNext, applyFinishedQuest, levelOf, activeSubject } from './engine-select.092d6f8319.js';
-import { QuestRun } from './engine-quest.564fa2602e.js';
-import { moreLikeThis, lessLikeThis, bandForGrade } from './engine-interests.d8832851c1.js';
-import { outcome } from './engine-levels.eb643f0433.js';
-import { focusSkill } from './text-report-text.a7ee858e1a.js';
-import { subjectFor, learnerSubjects, hasCheckinFor } from './engine-subjects.0b823f9641.js';
-import { DUMP_MAX_CHARS, QUEST_QUESTIONS, LEVEL_MAX } from './engine-constants.cab3bd2c6e.js';
+import { interestEditor, subjectEditor } from './ui-screens-onboard.1d2febe22e.js';
+import { TODAY, READ, DUMP, QUESTION, FEEDBACK, SUMMARY, SKILL_KID, SKILL_EYEBROW, C3, BANNERS, SUBJECTS_COPY, MILESTONES, CELEBRATE } from './text-copy.5e71bb1047.js';
+import { chooseNext, applyFinishedQuest, levelOf, activeSubject, nextQuestNumber } from './engine-select.dcc6fcf48a.js';
+import { QuestRun } from './engine-quest.4e9b7021a4.js';
+import { moreLikeThis, lessLikeThis, bandForGrade } from './engine-interests.7dd0456ab8.js';
+import { outcome } from './engine-levels.3311cee783.js';
+import { focusSkill } from './text-report-text.b1d09bb2dc.js';
+import { subjectFor, learnerSubjects, hasCheckinFor } from './engine-subjects.b9c5ff3bf4.js';
+import { DUMP_MAX_CHARS, QUEST_QUESTIONS, LEVEL_MAX } from './engine-constants.f6f2fc2188.js';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 
 function nextChoice(app, learner, subject = activeSubject(learner)) {
-  return chooseNext(learner, learner.quests.length + 1, app.data.BANK, app.data.TOPIC_MAP, subject);
+  return chooseNext(learner, nextQuestNumber(learner), app.data.BANK, app.data.TOPIC_MAP, subject);
 }
 
 function choiceLabel(app, choice) {
@@ -94,7 +94,7 @@ export function today(app) {
     h('header', { class: 'today-head' },
       h('p', { class: 'brand' }, h('img', { class: 'brand-mark', src: `assets/art/${bandForGrade(l.grade)}/lumi-idle.svg`, alt: '', width: 28, height: 34 }), 'Beacon'),
       button(TODAY.myInterests, () => app.go('my-interests'), 'pill')),
-    h('h1', { class: 'sr-only', text: `Today, for ${l.nick}` }),
+    h('h1', { class: 'today-hello', text: TODAY.hello(l.nick) }),
     subjectTabs(app, l, subject),
     stage(app, S.guide, { cls: 'today-stage' }),
     card,
@@ -105,7 +105,7 @@ export function today(app) {
     h('ul', { class: 'chips' }, chips),
     h('div', { class: 'today-foot' },
       ring(levelOf(l, subject)),
-      h('p', { class: 'muted', text: TODAY.done(l.quests.filter(q => (q.subject || 'reading') === subject).length) })),
+      h('p', { class: 'muted', text: TODAY.done(l.quests.filter(q => (q.subject || 'reading') === subject && q.kind !== 'checkin').length) })),
     h('div', { class: 'row-2' },
       button(`${MILESTONES.open} (${(l.milestones || []).length})`, () => app.go('milestones'), 'secondary'),
       app.store.state.learners.length > 1 ? button(TODAY.switchReader, () => app.go('who'), 'secondary') : null,
@@ -162,6 +162,7 @@ function openLookBack(app, passage) {
     }),
     slot,
     button(QUESTION.close, () => { stopVoice(); closeLayer(); }, 'primary block', { 'data-autofocus': true }));
+  d.addEventListener('close', () => { stopVoice(); closeLayer(); });
   openLayer(d);
 }
 
@@ -255,17 +256,17 @@ function questionScreen(app, run, l, top) {
   } else {
     const ok = picked === q.a;
     const band = bandForGrade(l.grade);
-    kids.push(h('div', { class: `feedback ${ok ? 'good' : 'tricky'}`, role: 'status', 'data-reveal': true },
+    kids.push(h('div', { class: `feedback ${ok ? 'good' : 'tricky'}`, 'data-reveal': true },
       character(subjectFor(run.subject).guide, ok ? 'cheer' : 'oops', l.grade, { decorative: true, cls: 'fb-pip' }),
       h('div', { class: 'fb-text' },
-        h('h2', {}, icon(ok ? 'check' : 'cross', 'icon fb-icon'), ok ? FEEDBACK.rightTitle[band] : FEEDBACK.wrongTitle[band]),
+        h('h2', { tabindex: '-1', 'data-autofocus': true }, icon(ok ? 'check' : 'cross', 'icon fb-icon'), ok ? FEEDBACK.rightTitle[band] : FEEDBACK.wrongTitle[band]),
         ok ? null : h('p', {}, h('strong', { text: FEEDBACK.rightAnswer(LETTERS[q.a]) + ' ' }), q.c[q.a]),
         h('p', { text: q.why })),
       button(run.qi + 1 < QUEST_QUESTIONS ? FEEDBACK.next : FEEDBACK.finish, () => {
         run.next();
         if (run.phase === 'summary') finishQuest(app);
         else app.render();
-      }, 'primary block', { 'data-autofocus': true })));
+      }, 'primary block')));
   }
   return screen('child', ...kids);
 }
@@ -300,7 +301,9 @@ function finishQuest(app) {
 export function summary(app) {
   const l = app.learner();
   const qr = app.lastQuest;
-  const o = outcome(qr.levelStart, qr.right, qr.of);
+  const moved = outcome(qr.levelStart, qr.right, qr.of);
+  // At the top or bottom level the level cannot move, so the line must not promise a change.
+  const o = qr.levelEnd !== qr.levelStart ? moved : moved === 'up' ? 'cap' : moved === 'down' ? 'floor' : 'hold';
   const skill = focusSkill(qr.rows, qr.subject);
   const label = (qr.interestId && interestLabel(app, qr.interestId)) || topicLabel(app, qr.topic);
   const tapMsg = h('p', { class: 'msg', role: 'status', 'aria-live': 'polite', text: app.summaryTap === 'more' ? SUMMARY.moreDone : app.summaryTap === 'less' ? SUMMARY.lessDone : '' });

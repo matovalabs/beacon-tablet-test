@@ -2,11 +2,12 @@
 // Movement appears only between questions: Today, onboarding, starting point and quest summary.
 // It stops when the grown-up turns movement off or the device asks for reduced motion.
 import { h, s } from './ui-dom.43bde315e2.js';
-import { character, characterSrc, button } from './ui-common.753749d5dd.js';
-import { sceneTree, HOME } from './ui-scenes.a359dada49.js';
+import { character, characterSrc, button } from './ui-common.4acae333f8.js';
+import { sceneTree, HOME } from './ui-scenes.cbf3c1f2c5.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
-import { CELEBRATE } from './text-copy.0ed1103432.js';
+import { CELEBRATE } from './text-copy.5e71bb1047.js';
 import { path } from './engine-retention.44d90a9335.js';
+import { bandForGrade } from './engine-interests.7dd0456ab8.js';
 
 export function motionOn(app) {
   const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -18,15 +19,17 @@ export function build(node) {
   return s(tag, attrs, kids.filter(Boolean).map(build));
 }
 
-// A scene with its guide standing on its ground. walk: the guide strolls across and back, stepping only
-// while it moves; otherwise it stands still. Lumi is a lighthouse: she stays in place, her beam drawn from
-// her lantern, and her cliff shows the items the reader has unlocked on her path.
+// A scene with its guide standing on its ground. walk: the guide goes to its spot and back, one beat at a time
+// (step, stop, gesture, turn), with its own gait; otherwise it stands still. Lumi is a lighthouse: she never moves,
+// her beam is drawn from her lantern, and her cliff shows the items the reader has unlocked on her path.
+// The grades 6 to 8 drawings are round badges with no feet on the ground, so they stand still too.
 export function stage(app, guide, { mood = 'idle', walk = true, cls = '' } = {}) {
   const l = app.learner();
+  const grade = l ? l.grade : 4;
   const moving = motionOn(app);
-  const planted = !walk || guide === 'lumi';
-  const actor = { src: characterSrc(guide, mood, l ? l.grade : 4), beam: guide === 'lumi' };
-  return h('div', { class: `stage ${moving ? 'moving' : 'still'} ${planted ? 'planted' : 'walking'} ${cls}`.replace(/\s+/g, ' ').trim() },
+  const planted = !walk || guide === 'lumi' || bandForGrade(grade) === 'grades-6-8';
+  const actor = { src: characterSrc(guide, mood, grade), beam: guide === 'lumi', guide };
+  return h('div', { class: `stage ${moving ? 'moving' : 'still'} ${planted ? 'planted' : `walking gait-${guide}`} ${cls}`.replace(/\s+/g, ' ').trim() },
     build(sceneTree(HOME[guide] || 'harbor', guide === 'lumi' && l ? path(l).unlocked : [], actor)));
 }
 

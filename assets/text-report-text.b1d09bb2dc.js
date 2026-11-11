@@ -1,9 +1,9 @@
 // Every sentence in the parent report: logic spec section 10, copied from the main kit's
 // 06-parent-reports.md sections 5, 6 and 12. Fixed text only. Nothing here is generated.
 // Pronouns: the nickname, or "they". Never "he" or "she".
-import { outcome } from './engine-levels.eb643f0433.js';
-import { LONG_ABSENCE_MS, LEVEL_MAX, LEVEL_MIN, STRONG_AT } from './engine-constants.cab3bd2c6e.js';
-import { subjectFor } from './engine-subjects.0b823f9641.js';
+import { outcome } from './engine-levels.3311cee783.js';
+import { LONG_ABSENCE_MS, LEVEL_MAX, LEVEL_MIN, STRONG_AT } from './engine-constants.f6f2fc2188.js';
+import { subjectFor } from './engine-subjects.b9c5ff3bf4.js';
 
 export const SKILL_NAMES = {
   central: 'Central idea',
@@ -64,7 +64,7 @@ export function levelSentence(nick, levelStart, levelEnd, right, of) {
   const n = levelEnd;
   switch (levelCase(levelStart, levelEnd, right, of)) {
     case 'up': return `${whose(nick)} level went up by one. ${Who(nick)} is now at level ${n}.`;
-    case 'cap': return `${Who(nick)} is at the top level, level 10, and stays there.`;
+    case 'cap': return `${Who(nick)} is at the top level, level ${LEVEL_MAX}, and stays there.`;
     case 'down': return `${whose(nick)} level moved down by one to level ${n}, so the next texts are a little easier.`;
     case 'floor': return `${Who(nick)} stays at level 1.`;
     default: return `${whose(nick)} level stays at level ${n}.`;

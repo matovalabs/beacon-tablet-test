@@ -1,10 +1,10 @@
 // Choosing the next text: logic spec section 5, step by step.
 // chooseNext is pure: no clock, no randomness, no global state, and it never changes the learner.
-import { LEVEL_MIN, LEVEL_MAX, NEAR_LEVELS, MAX_QUESTS } from './engine-constants.cab3bd2c6e.js';
+import { LEVEL_MIN, LEVEL_MAX, NEAR_LEVELS, MAX_QUESTS } from './engine-constants.f6f2fc2188.js';
 import { activeTopics, interestForTopic } from './engine-topics.a6ddd9fc2b.js';
-import { bankFor, learnerSubjects } from './engine-subjects.0b823f9641.js';
+import { bankFor, learnerSubjects } from './engine-subjects.b9c5ff3bf4.js';
 
-// The learner's level in one subject. A subject with no level yet starts at the grade, clamped to 1 to 10.
+// The learner's level in one subject. A subject with no level yet starts at the grade, clamped to 1 to 12.
 export function levelOf(learner, subject) {
   const v = learner.levels && learner.levels[subject];
   return Number.isInteger(v) ? v : Math.min(LEVEL_MAX, Math.max(LEVEL_MIN, learner.grade || LEVEL_MIN));
@@ -13,6 +13,12 @@ export function levelOf(learner, subject) {
 export function activeSubject(learner) {
   const list = learnerSubjects(learner);
   return list.includes(learner.subject) ? learner.subject : list[0];
+}
+
+// The number of the next quest: one more than the highest saved, so it keeps rising after old quests
+// are dropped at the 200 quest cap or to free storage (sections 3 and 5).
+export function nextQuestNumber(learner) {
+  return (learner.quests || []).reduce((m, q) => Math.max(m, Number.isInteger(q.n) ? q.n : 0), 0) + 1;
 }
 
 const byId = (a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);

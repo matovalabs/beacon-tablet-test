@@ -1,10 +1,10 @@
 // Copy summary: the one way anything can leave the device, and only by the parent's own hand
 // (logic spec section 12). No nickname, no free text, grade band only, days since the first session.
 // The same function feeds the preview box and the clipboard write, so the two are always identical.
-import { bandForGrade, bandLabel } from './engine-interests.d8832851c1.js';
-import { skillTotals, SKILL_NAMES, skillsFor, formatTime, times, chars } from './text-report-text.a7ee858e1a.js';
-import { subjectFor, learnerSubjects } from './engine-subjects.0b823f9641.js';
-import { levelOf } from './engine-select.092d6f8319.js';
+import { bandForGrade, bandLabel } from './engine-interests.7dd0456ab8.js';
+import { skillTotals, SKILL_NAMES, skillsFor, formatTime, times, chars } from './text-report-text.b1d09bb2dc.js';
+import { subjectFor, learnerSubjects } from './engine-subjects.b9c5ff3bf4.js';
+import { levelOf } from './engine-select.dcc6fcf48a.js';
 
 export const SUMMARY_FIRST_LINE = 'Beacon test summary, shared by a parent on their own choice.';
 

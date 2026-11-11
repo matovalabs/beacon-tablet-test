@@ -1,18 +1,18 @@
 // T1 to T3 for the grown-up, then C1, C2, subjects, C3 interests, the check-in intro and C5 for the child.
 import { h, icon } from './ui-dom.43bde315e2.js';
-import { screen, eyebrow, button, character, topbar } from './ui-common.753749d5dd.js';
-import { T1, T2, T3, C1, C2, C3, CHECKIN, C5, SKILL_KID, SUBJECTS_COPY } from './text-copy.0ed1103432.js';
-import { noticeBlocks, NOTICE_TITLE, CONSENT_LABEL, noticeVersion, storageLine } from './text-notice.6c4a52b5c7.js';
-import { MAX_LEARNERS, INTEREST_MAX } from './engine-constants.cab3bd2c6e.js';
-import { checkNick, checkGrade } from './engine-nick.b7bb440f66.js';
-import { newLearner } from './state-model.2a5beb144c.js';
-import { bandForGrade, bandList, toggle, pickStatus, setInterests, canAdd } from './engine-interests.d8832851c1.js';
-import { focusSkill } from './text-report-text.a7ee858e1a.js';
-import { SUBJECT_IDS, subjectFor, nextCheckin, learnerSubjects } from './engine-subjects.0b823f9641.js';
-import { activeSubject } from './engine-select.092d6f8319.js';
-import { stage, clip, hasClip, motionOn } from './ui-stage.2de2950010.js';
-import { award } from './engine-milestones.8771d03120.js';
-import { rewardsCard } from './ui-rewards.a4c6e969dd.js';
+import { screen, eyebrow, button, character, topbar } from './ui-common.4acae333f8.js';
+import { T1, T2, T3, C1, C2, C3, CHECKIN, C5, SKILL_KID, SUBJECTS_COPY } from './text-copy.5e71bb1047.js';
+import { noticeBlocks, NOTICE_TITLE, CONSENT_LABEL, noticeVersion, storageLine } from './text-notice.e16e9261e4.js';
+import { MAX_LEARNERS, INTEREST_MAX } from './engine-constants.f6f2fc2188.js';
+import { checkNick, checkGrade, nickTaken } from './engine-nick.095b899fd9.js';
+import { newLearner } from './state-model.76e8252557.js';
+import { bandForGrade, bandList, toggle, pickStatus, setInterests, canAdd } from './engine-interests.7dd0456ab8.js';
+import { focusSkill } from './text-report-text.b1d09bb2dc.js';
+import { SUBJECT_IDS, subjectFor, nextCheckin, learnerSubjects } from './engine-subjects.b9c5ff3bf4.js';
+import { activeSubject } from './engine-select.dcc6fcf48a.js';
+import { stage, clip, hasClip, motionOn } from './ui-stage.7026a28f6d.js';
+import { award } from './engine-milestones.1beec5fbec.js';
+import { rewardsCard } from './ui-rewards.c58763a904.js';
 
 export function noticeView(app, headingLevel = 'h2') {
   return h('div', { class: 'notice' },
@@ -54,9 +54,10 @@ export function addLearner(app, arg) {
   const gradeErr = h('p', { class: 'error', id: 'grade-error', role: 'alert' });
   const submit = e => {
     e.preventDefault();
-    const n = checkNick(nick.value);
+    let n = checkNick(nick.value);
+    if (n.ok && nickTaken(n.nick, app.store.state.learners)) n = { ok: false, reason: 'taken' };
     const g = checkGrade(grade.value);
-    nickErr.textContent = n.ok ? '' : (n.reason === 'long' ? T2.nickLong : T2.nickError);
+    nickErr.textContent = n.ok ? '' : (n.reason === 'long' ? T2.nickLong : n.reason === 'taken' ? T2.nickTaken : T2.nickError);
     gradeErr.textContent = g.ok ? '' : T2.gradeError;
     nick.setAttribute('aria-invalid', n.ok ? 'false' : 'true');
     if (!n.ok) { nick.focus(); return; }

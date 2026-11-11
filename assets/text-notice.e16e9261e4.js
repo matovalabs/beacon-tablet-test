@@ -3,7 +3,7 @@
 // The host email-code paragraph is a build setting (HOST_ACCESS_NOTICE), so a family never sees a bracketed choice.
 // The iPad and Android apps (site.app, set by tools/build-native.mjs) have no browser and no website host, so their
 // notice says "this app" and says what TestFlight shares instead. Drafted October 21, 2026; counsel edits it too.
-import { NOTICE_VERSION, APP_NOTICE_VERSION } from './engine-constants.cab3bd2c6e.js';
+import { NOTICE_VERSION, APP_NOTICE_VERSION } from './engine-constants.f6f2fc2188.js';
 
 export const NOTICE_TITLE = 'About this test of Beacon';
 export const COOKIE_LINE = "This page sets no cookies of its own. It saves your child's results in this browser's storage, which you can clear.";

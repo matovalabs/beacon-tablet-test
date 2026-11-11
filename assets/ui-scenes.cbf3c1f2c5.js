@@ -172,31 +172,55 @@ export function keepsakeTree(id, cls = 'keepsake') {
 // Which scene each guide lives in.
 export const HOME = { pip: 'harbor', lumi: 'cliff', tally: 'tidepool', fizz: 'reef', atlas: 'riverbank' };
 
-// Where a guide stands in each scene: x is the middle of its walk, y is the ground line its feet rest on
-// (the top of the dock, the sand, the grass). Walks go WALK units each way and stay clear of the pools and the river.
+// Where a guide stands in each scene: x is its home spot, y is the ground line its feet rest on
+// (the top of the dock, the sand, the grass). Walks stay on the ground and clear of the pools and the river.
 export const GROUND = {
   harbor: { x: 200, y: 217 }, cliff: { x: 200, y: 252 }, tidepool: { x: 205, y: 246 }, reef: { x: 200, y: 252 }, riverbank: { x: 190, y: 262 }
 };
-export const WALK = 55;
 // A guide is drawn ACTOR wide (the art is 200 by 240). In the art, the feet end at y = 217 and the drawn
 // shadow sits below them, from y = 216: the shadow is clipped off and the scene draws its own on the ground.
-const ACTOR = 100;
+export const ACTOR = 100;
 const ART_FEET = 217 / 240;
 const LAMP = { x: 0, y: 63 / 240 }; // the middle of Lumi's lantern, in the art
+// Art coordinates (200 by 240) to the guide's own scene units: x from its middle, y up from the ground (negative is up).
+const art = (x, y) => [(x - 100) * ACTOR / 200, (y - 217) * ACTOR / 200];
+
+// Where each walking guide's two outer feet touch the ground, left then right, in scene units from its middle
+// (grades 3 to 5 art). Every lean pivots on one of these two points, so a planted foot cannot slide.
+export const FEET = { pip: [art(79, 0)[0], art(121, 0)[0]], tally: [art(40, 0)[0], art(140, 0)[0]], fizz: [art(76, 0)[0], art(124, 0)[0]], atlas: [art(78, 0)[0], art(122, 0)[0]] };
+
+// How far each guide goes from its home spot (scene units, to the right), and the one thing it touches there.
+// part: the round end of the guide's own item or claw (middle and radius). edge: a flat side of a scene object
+// at that x. circle: a round scene object. tools/walk-keyframes.mjs works out the standing spot from these so the
+// part lands on the object when the guide leans; a unit test checks the contact.
+export const BOOKS = { x: 318, y: 182 }; // Pip's book stack; its top book starts 2 units in
+export const SHELL = { x: 290, y: 228, r: 5.75 }; // the nearest counting shell, with its outline
+export const REACH = {
+  pip: { part: { at: art(168.7, 149.2), r: 2.45 }, edge: { x: BOOKS.x + 2, top: BOOKS.y + 2 - GROUND.harbor.y, bottom: BOOKS.y + 12 - GROUND.harbor.y }, lean: 5 },
+  tally: { part: { at: art(149.9, 163.6), r: 8.25 }, circle: { x: SHELL.x, y: SHELL.y - GROUND.tidepool.y, r: SHELL.r }, lean: 3 },
+  fizz: { walk: 45 },
+  atlas: { walk: 50 }
+};
 
 // The guide inside the scene, so it stands on the ground at every stage size. The groups, outside in:
-// track (walks across), shadow (stays on the ground), face (turns round), body (steps, pivoting on the feet).
-function actorTree(name, { src, beam }) {
+// track (travels across), shadow (stays on the ground), face (turns round), lift (leaves the ground in a step),
+// reach (Tally's sideways stretch, held at the left foot), tilt-l and tilt-r (lean on the left or the right foot),
+// squash (bends at the ground). Each lean group sits at its own foot, so it can only turn about that foot.
+const at = (x, cls, child) => ['g', { transform: `translate(${x} 0)` }, ['g', { class: cls }, ['g', { transform: `translate(${-x} 0)` }, child]]];
+function actorTree(name, { src, beam, guide }) {
   const g = GROUND[name] || GROUND.harbor;
   const w = ACTOR, hgt = ACTOR * 1.2, feet = hgt * ART_FEET;
+  const [fl, fr] = FEET[guide] || [-10, 10];
+  const drawing = ['g', { class: 'actor-squash' },
+    beam ? beamTree(LAMP.x * w, LAMP.y * hgt - feet) : null,
+    ['image', { href: src, x: -w / 2, y: -feet, width: w, height: hgt, 'clip-path': 'url(#actor-feet)' }]];
   return ['g', { transform: `translate(${g.x} ${g.y})` },
     ['defs', {}, ['clipPath', { id: 'actor-feet' }, ['rect', { x: -w, y: -hgt - 10, width: 2 * w, height: hgt + 10.5 }]]],
     ['g', { class: 'actor-track' },
       ['ellipse', { class: 'actor-shadow', cx: 0, cy: 1, rx: w * 0.27, ry: w * 0.035, fill: '#000', opacity: 0.22 }],
       ['g', { class: 'actor-face' },
-        ['g', { class: 'actor-body' },
-          beam ? beamTree(LAMP.x * w, LAMP.y * hgt - feet) : null,
-          ['image', { href: src, x: -w / 2, y: -feet, width: w, height: hgt, 'clip-path': 'url(#actor-feet)' }]]]]];
+        ['g', { class: 'actor-lift' },
+          at(fl, 'actor-reach', at(fl, 'actor-tilt-l', at(fr, 'actor-tilt-r', drawing)))]]]];
 }
 
 // Lumi's beam: a flat cone of light from her lantern out to the right, as in her clip. It sweeps from the lamp.

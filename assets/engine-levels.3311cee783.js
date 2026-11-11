@@ -1,10 +1,10 @@
-import { LEVEL_MIN, LEVEL_MAX, UP_AT, DOWN_BELOW } from './engine-constants.cab3bd2c6e.js';
+import { LEVEL_MIN, LEVEL_MAX, UP_AT, DOWN_BELOW } from './engine-constants.f6f2fc2188.js';
 
 export function clampLevel(n) {
   return Math.min(LEVEL_MAX, Math.max(LEVEL_MIN, n));
 }
 
-// The check-in starts at the learner's grade, clamped to 1 to 10.
+// The check-in starts at the learner's grade, clamped to 1 to 12.
 export function startLevel(grade) {
   return clampLevel(Math.round(Number(grade) || LEVEL_MIN));
 }

@@ -28,6 +28,7 @@ export const T2 = {
   nickHint: 'One word, letters only. A hyphen is fine.',
   nickError: 'A short nickname is enough. Please use one word, not a full name. Letters and a hyphen only.',
   nickLong: 'Please use 20 letters or fewer.',
+  nickTaken: 'Another reader here already uses that nickname. Please pick a different one.',
   gradeLabel: 'Grade',
   gradeError: 'Please pick a grade.',
   gradeOption: g => `Grade ${g}`,
@@ -150,6 +151,7 @@ export const SKILL_EYEBROW = {
 
 export const TODAY = {
   eyebrow: "Today's quest",
+  hello: nick => `Hi, ${nick}`,
   meta: 'About 10 minutes, 8 questions, no timer',
   picked: label => `Picked for you: ${label}`,
   mix: 'A mix today',
@@ -225,6 +227,8 @@ export const SUMMARY = {
   up: 'Next time the texts will be a little harder.',
   hold: 'Next time the texts will be about the same.',
   down: 'Next time the texts will be a little easier.',
+  cap: 'You are at the top level. The texts stay at this level.',
+  floor: 'Next time the texts will be about the same.',
   work: 'One skill to work on:',
   allStrong: 'Every skill looked solid today.',
   aboutTopic: label => `Did you like reading about ${label}?`,
@@ -263,6 +267,7 @@ export const GROWNUP = {
   changeInterests: 'Change interests',
   limits: 'What Beacon cannot see',
   back: 'Back to reports',
+  print: 'Print this report',
   progressTitle: 'Progress',
   questList: 'Quests, newest first',
   levelLine: 'Level after each quest',

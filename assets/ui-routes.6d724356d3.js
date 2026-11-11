@@ -1,13 +1,13 @@
 // Hash routing: one id per screen. guard() returns the route to show instead, or null.
 import { h } from './ui-dom.43bde315e2.js';
-import { screen, button, confirmDialog, hasCheckin } from './ui-common.753749d5dd.js';
-import { welcome, addLearner, handoff, meet, sees, subjects, interests, checkinIntro, startingPoint } from './ui-screens-onboard.0d8dbb7cf1.js';
-import { nextCheckin } from './engine-subjects.0b823f9641.js';
-import { today, myInterests, who, quest, summary, startQuest, milestones } from './ui-screens-child.860edac404.js';
-import { gate, grownup } from './ui-screens-grownup.30080e0251.js';
-import { cliff } from './ui-rewards.a4c6e969dd.js';
-import { syncReminder } from './ui-reminder.8b85a941d4.js';
-import { BANNERS, GROWNUP } from './text-copy.0ed1103432.js';
+import { screen, button, confirmDialog, hasCheckin } from './ui-common.4acae333f8.js';
+import { welcome, addLearner, handoff, meet, sees, subjects, interests, checkinIntro, startingPoint } from './ui-screens-onboard.1d2febe22e.js';
+import { nextCheckin } from './engine-subjects.b9c5ff3bf4.js';
+import { today, myInterests, who, quest, summary, startQuest, milestones } from './ui-screens-child.1492d50a67.js';
+import { gate, grownup } from './ui-screens-grownup.73d04cab64.js';
+import { cliff } from './ui-rewards.c58763a904.js';
+import { syncReminder } from './ui-reminder.a8894c8223.js';
+import { BANNERS, GROWNUP } from './text-copy.5e71bb1047.js';
 
 function blocked(app) {
   const msg = app.store.newer ? BANNERS.newer : BANNERS.invalid;

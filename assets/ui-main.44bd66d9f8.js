@@ -1,16 +1,16 @@
 // Boot: storage, routing, and the page-level listeners for the attention signals.
 // Signals are recorded only while a quest runs (Telemetry ignores them otherwise).
-import { BANK, INTERESTS, TOPIC_MAP, SITE, SUBJECTS_AVAILABLE, GLOSSARY, PROMPT_AUDIO, MEDIA } from './data.9653d12ca6.js';
-import { Store, safeStorage } from './state-store.4e3c3d5593.js';
-import { Telemetry } from './engine-telemetry.fa66b3d7f1.js';
+import { BANK, INTERESTS, TOPIC_MAP, SITE, SUBJECTS_AVAILABLE, GLOSSARY, PROMPT_AUDIO, MEDIA } from './data.dc8f6dbdee.js';
+import { Store, safeStorage } from './state-store.72bdd9902b.js';
+import { Telemetry } from './engine-telemetry.751c13a370.js';
 import { systemClock } from './engine-clock.cb87acb031.js';
-import { STORAGE_KEY, TAB_KEY } from './engine-constants.cab3bd2c6e.js';
-import { BANNERS } from './text-copy.0ed1103432.js';
+import { STORAGE_KEY, TAB_KEY } from './engine-constants.f6f2fc2188.js';
+import { BANNERS } from './text-copy.5e71bb1047.js';
 import { h, clear } from './ui-dom.43bde315e2.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
-import { celebrate, motionOn } from './ui-stage.2de2950010.js';
-import { routes, guard } from './ui-routes.617c545042.js';
-import { syncReminder } from './ui-reminder.8b85a941d4.js';
+import { celebrate, motionOn } from './ui-stage.7026a28f6d.js';
+import { routes, guard } from './ui-routes.6d724356d3.js';
+import { syncReminder } from './ui-reminder.a8894c8223.js';
 
 const storage = safeStorage(() => window.localStorage);
 const store = new Store(storage);
@@ -62,16 +62,23 @@ export const app = {
   render() {
     const r = this.route();
     const target = guard(this, r);
+    // Back during a quest: keep the screen as it is (a picked answer or a typed sentence stays) and put
+    // the quest back on top of the history, so pressing Back again cannot walk out of the app.
+    if (target === 'quest' && this.shown === 'quest' && this.run) {
+      history.pushState(null, '', '#/quest');
+      return;
+    }
     if (target !== null && target !== `${r.name}${r.arg ? '/' + r.arg : ''}`) {
       history.replaceState(null, '', `#/${target}`);
       return this.render();
     }
     const screen = routes[r.name];
+    this.shown = r.name;
     const main = document.getElementById('main');
     clear(main);
     closeLayer();
     const node = screen(this, r.arg);
-    document.body.className = (node.dataset.theme === 'parent' ? 'parent' : 'child') + (motionOn(this) ? '' : ' still');
+    document.body.className = (node.dataset.theme === 'parent' ? 'parent' : 'child') + (motionOn(this) ? '' : ' still') + (r.name === 'quest' ? ' in-quest' : '');
     main.append(node);
     renderBanner(this);
     if (this.pausedByOtherTab) showPause(this);
