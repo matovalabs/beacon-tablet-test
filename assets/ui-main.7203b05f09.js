@@ -8,8 +8,8 @@ import { STORAGE_KEY, TAB_KEY } from './engine-constants.f6f2fc2188.js';
 import { BANNERS } from './text-copy.5e71bb1047.js';
 import { h, clear } from './ui-dom.43bde315e2.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
-import { celebrate, motionOn } from './ui-stage.7026a28f6d.js';
-import { routes, guard } from './ui-routes.6d724356d3.js';
+import { celebrate, motionOn } from './ui-stage.b19732b10d.js';
+import { routes, guard } from './ui-routes.c63a64a98d.js';
 import { syncReminder } from './ui-reminder.a8894c8223.js';
 
 const storage = safeStorage(() => window.localStorage);

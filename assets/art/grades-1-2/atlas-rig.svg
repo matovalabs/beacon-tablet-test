@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240" role="img" aria-labelledby="t d">
+<title id="t">Atlas the sea otter, idle, Grades 1-2</title>
+<desc id="d">Atlas, a brown sea otter with a brass compass around his neck, stands holding a rolled map.</desc>
+<defs><clipPath id="at12i-hd1"><circle cx="100" cy="104" r="50.7"/></clipPath></defs>
+<g transform="translate(100 223) scale(1.04) translate(-100 -223)">
+<g id="atlas-g12-idle">
+<ellipse class="shadow" cx="100" cy="223" rx="59.3" ry="7.7" fill="#000" opacity="0.26"/>
+<g class="figure" transform="rotate(0 100 214)">
+<g data-rig="body" data-pivot="100 213">
+<path fill="#A06129" d="M136.7,203 Q178.7,207 176,179 Q157.7,191 131.5,189Z"/>
+<ellipse fill="#C68041" cx="100" cy="164.9" rx="52.4" ry="41.1"/>
+<ellipse fill="#F5DAB2" cx="100" cy="172.9" rx="34.6" ry="31.2"/>
+<circle fill="#C68041" cx="56.4" cy="76.1" r="7.7"/>
+<circle fill="#C68041" cx="143.6" cy="76.1" r="7.7"/>
+<circle fill="#C68041" cx="100" cy="104" r="50.7"/>
+<g clip-path="url(#at12i-hd1)"><ellipse cx="100" cy="125.3" rx="53.2" ry="39.5" fill="#F5DAB2"/></g>
+<ellipse fill="#F5DAB2" cx="100" cy="121.2" rx="25.3" ry="17.2"/>
+<g class="eye">
+<circle fill="#FFFFFF" cx="79.1" cy="99.9" r="15.3"/>
+<circle cx="79.4" cy="100.5" r="8.6" fill="#15264B"/>
+<circle cx="76.4" cy="97.4" r="3.3" fill="#fff"/>
+<circle cx="83" cy="104.1" r="1.5" fill="#fff" opacity="0.9"/>
+</g>
+<g class="eye">
+<circle fill="#FFFFFF" cx="120.9" cy="99.9" r="15.3"/>
+<circle cx="121.2" cy="100.5" r="8.6" fill="#15264B"/>
+<circle cx="118.2" cy="97.4" r="3.3" fill="#fff"/>
+<circle cx="124.8" cy="104.1" r="1.5" fill="#fff" opacity="0.9"/>
+</g>
+<path fill="#453126" d="M94,112.1 Q100,108.6 106,112.1 Q103,118.1 100,118.6 Q97,118.1 94,112.1Z"/>
+<path d="M94.5,121.1 Q100,126.6 105.5,121.1" fill="none" stroke="#684123" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse class="blush" cx="63.8" cy="115.3" rx="9.1" ry="6.2" fill="#FFA799" opacity="0.62"/>
+<ellipse class="blush" cx="136.2" cy="115.3" rx="9.1" ry="6.2" fill="#FFA799" opacity="0.62"/>
+<path d="M86,149.6 L100,154.3 L114,149.6" stroke="#DB8F13" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+<circle fill="#F3AE2F" cx="100" cy="167.3" r="13.2"/>
+<circle fill="#FAF1D6" cx="100" cy="167.3" r="9.8"/>
+<path d="M100,159.4 L103.6,167.3 L96.4,167.3Z" fill="#D95A4D"/>
+<path d="M100,175.2 L103.6,167.3 L96.4,167.3Z" fill="#A06129"/>
+<g data-rig="arml" data-pivot="54.9 150.1">
+<path fill="#A06129" d="M0,0 C11,5.6 11.6,21.9 6.8,31.3 L-6.8,31.3 C-11.6,21.9 -11,5.6 0,0Z" transform="translate(54.9 150.1) rotate(12)"/>
+<g data-rig="handl" data-pivot="48.4 180.7">
+<circle fill="#A06129" cx="48.4" cy="183.7" r="8.5"/>
+</g></g>
+<g data-rig="armr" data-pivot="145.1 150.1">
+<path fill="#A06129" d="M0,0 C11,5.1 11.6,19.7 6.8,28.1 L-6.8,28.1 C-11.6,19.7 -11,5.1 0,0Z" transform="translate(145.1 150.1) rotate(-12)"/>
+<g data-rig="handr" data-pivot="150.9 177.7">
+<g class="map" transform="translate(153.9 155.7) rotate(-4)">
+<rect fill="#FAF1D6" x="-6" y="0" width="12" height="48" rx="6"/>
+<rect fill="#F3AE2F" x="-7.5" y="-2" width="15" height="7" rx="3"/>
+<rect fill="#F3AE2F" x="-7.5" y="43" width="15" height="7" rx="3"/>
+</g>
+<circle fill="#A06129" cx="150.9" cy="180.6" r="8.5"/>
+</g></g>
+</g>
+<g data-rig="legl" data-pivot="74.9 213">
+<rect fill="#A06129" x="68.4" y="196" width="13" height="14" rx="6.5"/>
+<ellipse fill="#A06129" cx="74.9" cy="210" rx="15" ry="7.5"/>
+</g>
+<g data-rig="legr" data-pivot="125.1 213">
+<rect fill="#A06129" x="118.6" y="196" width="13" height="14" rx="6.5"/>
+<ellipse fill="#A06129" cx="125.1" cy="210" rx="15" ry="7.5"/>
+</g>
+</g></g>
+</g>
+</svg>

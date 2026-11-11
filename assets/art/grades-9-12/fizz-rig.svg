@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240" role="img" aria-labelledby="t d">
+<title id="t">Fizz the sea turtle, idle, Grades 9-12</title>
+<desc id="d">Fizz, a lime-green sea turtle with lab goggles pushed up on his forehead, holds a flask of bright blue liquid.</desc>
+<defs><clipPath id="fi912i-lid1"><path d="M73.7,107.7 A8.5,8.5 0 1 0 89.3,107.7Z"/></clipPath><clipPath id="fi912i-lid2"><path d="M110.7,107.7 A8.5,8.5 0 1 0 126.3,107.7Z"/></clipPath></defs>
+<g id="fizz-g912-idle">
+<g class="figure" transform="rotate(0 100 214)">
+<g data-rig="body" data-pivot="100 214">
+<ellipse fill="#8BC545" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="100" cy="167.4" rx="54.6" ry="52.8"/>
+<path d="M61.4,147.4 v24" stroke="#8BC545" stroke-width="3" stroke-linecap="round"/>
+<path d="M138.6,147.4 v24" stroke="#8BC545" stroke-width="3" stroke-linecap="round"/>
+<ellipse fill="#8BC545" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="100" cy="165.4" rx="36.1" ry="42.6"/>
+<ellipse fill="#F4F1E7" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="100" cy="171.4" rx="23.8" ry="30.7"/>
+<circle fill="#8BC545" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="100" cy="108.5" r="32.7"/>
+<path d="M67.9,99.5 Q100,81.5 132.1,99.5" stroke="#F4F1E7" stroke-width="7" fill="none" stroke-linecap="round"/>
+<g class="eye">
+<path fill="#F4F1E7" d="M73.7,107.7 A8.5,8.5 0 1 0 89.3,107.7Z"/>
+<g clip-path="url(#fi912i-lid1)">
+<circle cx="81.6" cy="111.4" r="4.8" fill="#16223B"/>
+</g>
+<path d="M73.2,107.7 L89.8,107.7" fill="none" stroke="#16223B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g class="eye">
+<path fill="#F4F1E7" d="M110.7,107.7 A8.5,8.5 0 1 0 126.3,107.7Z"/>
+<g clip-path="url(#fi912i-lid2)">
+<circle cx="118.7" cy="111.4" r="4.8" fill="#16223B"/>
+</g>
+<path d="M110.2,107.7 L126.8,107.7" fill="none" stroke="#16223B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path d="M113.4,99.1 L123.6,99.1" fill="none" stroke="#16223B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="rotate(-5 118.5 99.1)"/>
+<path d="M94,127.6 Q100,133.6 106,127.6" fill="none" stroke="#3E681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle fill="#E1A432" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="88.7" cy="91.5" r="9.8"/>
+<circle fill="#F4F1E7" cx="88.7" cy="91.5" r="6.6"/>
+<circle fill="#E1A432" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="111.3" cy="91.5" r="9.8"/>
+<circle fill="#F4F1E7" cx="111.3" cy="91.5" r="6.6"/>
+<g data-rig="arml" data-pivot="69 146.6">
+<path fill="#8BC545" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" d="M0,0 C11,6.3 11.6,24.4 6.8,34.9 L-6.8,34.9 C-11.6,24.4 -11,6.3 0,0Z" transform="translate(69 146.6) rotate(14)"/>
+<g data-rig="handl" data-pivot="60.5 180.4">
+<circle fill="#8BC545" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="60.5" cy="183.4" r="8.5"/>
+</g></g>
+<g data-rig="armr" data-pivot="131 146.6">
+<path fill="#8BC545" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" d="M0,0 C11,6.3 11.6,24.4 6.8,34.9 L-6.8,34.9 C-11.6,24.4 -11,6.3 0,0Z" transform="translate(131 146.6) rotate(-14)"/>
+<g data-rig="handr" data-pivot="139.5 180.4">
+<g class="flask" transform="translate(142.5 184.4) rotate(-8)">
+<path d="M-4,-20 L4,-20 L4,-8 L13,8 Q15.5,15 8,15 L-8,15 Q-15.5,15 -13,8 L-4,-8Z" fill="#F4F1E7" opacity="1" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" />
+<path d="M-11,6 L11,6 L13,8 Q15.5,15 8,15 L-8,15 Q-15.5,15 -13,8Z" fill="#E1A432"/>
+<rect x="-5.2" y="-22.5" width="10.4" height="3.6" rx="1.6" fill="#E1A432"/>
+</g>
+<circle fill="#8BC545" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="139.5" cy="183.4" r="8.5"/>
+</g></g>
+</g>
+<g data-rig="legl" data-pivot="80.3 214">
+<rect fill="#8BC545" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" x="73.3" y="198" width="14" height="12" rx="7"/>
+<ellipse fill="#8BC545" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="80.3" cy="210" rx="16" ry="7.5"/>
+</g>
+<g data-rig="legr" data-pivot="119.7 214">
+<rect fill="#8BC545" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" x="112.7" y="198" width="14" height="12" rx="7"/>
+<ellipse fill="#8BC545" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="119.7" cy="210" rx="16" ry="7.5"/>
+</g>
+</g></g>
+</svg>

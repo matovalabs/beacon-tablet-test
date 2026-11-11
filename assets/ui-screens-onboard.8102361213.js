@@ -10,9 +10,9 @@ import { bandForGrade, bandList, toggle, pickStatus, setInterests, canAdd } from
 import { focusSkill } from './text-report-text.b1d09bb2dc.js';
 import { SUBJECT_IDS, subjectFor, nextCheckin, learnerSubjects } from './engine-subjects.b9c5ff3bf4.js';
 import { activeSubject } from './engine-select.dcc6fcf48a.js';
-import { stage, clip, hasClip, motionOn } from './ui-stage.7026a28f6d.js';
+import { stage, clip, hasClip, motionOn } from './ui-stage.b19732b10d.js';
 import { award } from './engine-milestones.1beec5fbec.js';
-import { rewardsCard } from './ui-rewards.c58763a904.js';
+import { rewardsCard } from './ui-rewards.554b0d3302.js';
 
 export function noticeView(app, headingLevel = 'h2') {
   return h('div', { class: 'notice' },

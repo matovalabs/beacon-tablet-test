@@ -1,7 +1,7 @@
 // The Grown-up area: gate, Reports, Progress, Interests, Settings and privacy, Readers (section 12).
 import { h, s, icon } from './ui-dom.43bde315e2.js';
 import { screen, eyebrow, button, confirmDialog, formatDate, interestLabel, topicLabel, passageTitle, hasCheckin } from './ui-common.4acae333f8.js';
-import { interestEditor, subjectEditor, noticeView } from './ui-screens-onboard.1d2febe22e.js';
+import { interestEditor, subjectEditor, noticeView } from './ui-screens-onboard.8102361213.js';
 import { GATE, GROWNUP, T2, C3 } from './text-copy.5e71bb1047.js';
 import { buildReport, skillTotals, SKILL_NAMES, skillsFor, PROGRESS_HONEST, CLIPBOARD_LINE } from './text-report-text.b1d09bb2dc.js';
 import { subjectFor, learnerSubjects } from './engine-subjects.b9c5ff3bf4.js';

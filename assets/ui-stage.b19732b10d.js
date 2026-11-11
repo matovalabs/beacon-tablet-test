@@ -3,11 +3,12 @@
 // It stops when the grown-up turns movement off or the device asks for reduced motion.
 import { h, s } from './ui-dom.43bde315e2.js';
 import { character, characterSrc, button } from './ui-common.4acae333f8.js';
-import { sceneTree, HOME } from './ui-scenes.cbf3c1f2c5.js';
+import { sceneTree, HOME } from './ui-scenes.44831deef9.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
 import { CELEBRATE } from './text-copy.5e71bb1047.js';
 import { path } from './engine-retention.44d90a9335.js';
 import { bandForGrade } from './engine-interests.7dd0456ab8.js';
+import { RIGS } from './ui-rig-art.f289cd9f03.js';
 
 export function motionOn(app) {
   const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -28,7 +29,8 @@ export function stage(app, guide, { mood = 'idle', walk = true, cls = '' } = {})
   const grade = l ? l.grade : 4;
   const moving = motionOn(app);
   const planted = !walk || guide === 'lumi' || bandForGrade(grade) === 'grades-6-8';
-  const actor = { src: characterSrc(guide, mood, grade), beam: guide === 'lumi', guide };
+  const rig = !planted && mood === 'idle' && RIGS[bandForGrade(grade)] ? RIGS[bandForGrade(grade)][guide] || null : null;
+  const actor = { src: characterSrc(guide, mood, grade), beam: guide === 'lumi', guide, rig };
   return h('div', { class: `stage ${moving ? 'moving' : 'still'} ${planted ? 'planted' : `walking gait-${guide}`} ${cls}`.replace(/\s+/g, ' ').trim() },
     build(sceneTree(HOME[guide] || 'harbor', guide === 'lumi' && l ? path(l).unlocked : [], actor)));
 }

@@ -197,7 +197,8 @@ export const BOOKS = { x: 318, y: 182 }; // Pip's book stack; its top book start
 export const SHELL = { x: 290, y: 228, r: 5.75 }; // the nearest counting shell, with its outline
 export const REACH = {
   pip: { part: { at: art(168.7, 149.2), r: 2.45 }, edge: { x: BOOKS.x + 2, top: BOOKS.y + 2 - GROUND.harbor.y, bottom: BOOKS.y + 12 - GROUND.harbor.y }, lean: 5 },
-  tally: { part: { at: art(149.9, 163.6), r: 8.25 }, circle: { x: SHELL.x, y: SHELL.y - GROUND.tidepool.y, r: SHELL.r }, lean: 3 },
+  // Tally's claw in the rigged drawing (her body and claws sit 7 art units higher than in the idle picture).
+  tally: { part: { at: art(149.9, 156.6), r: 8.25 }, circle: { x: SHELL.x, y: SHELL.y - GROUND.tidepool.y, r: SHELL.r }, lean: 3 },
   fizz: { walk: 45 },
   atlas: { walk: 50 }
 };
@@ -207,13 +208,17 @@ export const REACH = {
 // reach (Tally's sideways stretch, held at the left foot), tilt-l and tilt-r (lean on the left or the right foot),
 // squash (bends at the ground). Each lean group sits at its own foot, so it can only turn about that foot.
 const at = (x, cls, child) => ['g', { transform: `translate(${x} 0)` }, ['g', { class: cls }, ['g', { transform: `translate(${-x} 0)` }, child]]];
-function actorTree(name, { src, beam, guide }) {
+function actorTree(name, { src, beam, guide, rig = null }) {
   const g = GROUND[name] || GROUND.harbor;
   const w = ACTOR, hgt = ACTOR * 1.2, feet = hgt * ART_FEET;
   const [fl, fr] = FEET[guide] || [-10, 10];
+  // A rigged walking drawing (src/ui/rig-art.js) is drawn inline so each leg, arm and hand can move on its own;
+  // otherwise the art file is drawn as one picture.
+  const art = rig
+    ? ['g', { 'clip-path': 'url(#actor-feet)' }, ['g', { transform: `translate(${-w / 2} ${-feet}) scale(${w / 200})` }, rig]]
+    : ['image', { href: src, x: -w / 2, y: -feet, width: w, height: hgt, 'clip-path': 'url(#actor-feet)' }];
   const drawing = ['g', { class: 'actor-squash' },
-    beam ? beamTree(LAMP.x * w, LAMP.y * hgt - feet) : null,
-    ['image', { href: src, x: -w / 2, y: -feet, width: w, height: hgt, 'clip-path': 'url(#actor-feet)' }]];
+    beam ? beamTree(LAMP.x * w, LAMP.y * hgt - feet) : null, art];
   return ['g', { transform: `translate(${g.x} ${g.y})` },
     ['defs', {}, ['clipPath', { id: 'actor-feet' }, ['rect', { x: -w, y: -hgt - 10, width: 2 * w, height: hgt + 10.5 }]]],
     ['g', { class: 'actor-track' },

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240" role="img" aria-labelledby="t d">
+<title id="t">Pip the Lookout, idle, Grades 1-2</title>
+<desc id="d">Pip, a teal-green puffin in a navy captain's cap, stands calmly holding a brass spyglass.</desc>
+<defs><clipPath id="pi12i-cap1"><path d="M59.4,95.7 C59.4,70.6 77.7,60.6 100,60.6 C122.3,60.6 140.6,70.6 140.6,95.7Z"/></clipPath></defs>
+<g transform="translate(100 223) scale(1.12) translate(-100 -223)">
+<g id="pip-g12-idle">
+<ellipse class="shadow" cx="100" cy="223" rx="61.6" ry="8" fill="#000" opacity="0.26"/>
+<g class="figure" transform="rotate(0 100 211)">
+<g data-rig="body" data-pivot="100 211">
+<g data-rig="arml" data-pivot="32.9 150.2">
+<path fill="#04B482" d="M0,0 C11.5,5.7 12.1,22.3 7.1,31.8 L-7.1,31.8 C-12.1,22.3 -11.5,5.7 0,0Z" transform="translate(32.9 150.2) rotate(10)"/>
+<g data-rig="handl" data-pivot="27.3 181.6">
+<circle fill="#04B482" cx="27.3" cy="184.2" r="7.5"/>
+</g></g>
+<path fill="#0DDEA1" d="M100,86.2 C150.9,86.2 170.7,121 170.7,163.6 C170.7,193 149.5,211 100,211 C50.5,211 29.3,193 29.3,163.6 C29.3,121 49.1,86.2 100,86.2Z"/>
+<ellipse fill="#94F6D7" cx="100" cy="176.2" rx="49.5" ry="33.7"/>
+<path fill="#FFFFFF" d="M40.6,120.3 C40.6,98.2 67.3,92.2 100,96.2 C132.7,92.2 159.4,98.2 159.4,120.3 C159.4,143.4 135.6,152.4 100,147.4 C64.4,152.4 40.6,143.4 40.6,120.3Z"/>
+<g class="eye">
+<circle fill="#FFFFFF" cx="78" cy="125.5" r="18.9"/>
+<circle cx="78.6" cy="125.9" r="10.6" fill="#15264B"/>
+<circle cx="75" cy="122.1" r="4" fill="#fff"/>
+<circle cx="83" cy="130.3" r="1.8" fill="#fff" opacity="0.9"/>
+</g>
+<g class="eye">
+<circle fill="#FFFFFF" cx="122" cy="125.5" r="18.9"/>
+<circle cx="122.7" cy="125.9" r="10.6" fill="#15264B"/>
+<circle cx="119.1" cy="122.1" r="4" fill="#fff"/>
+<circle cx="127.1" cy="130.3" r="1.8" fill="#fff" opacity="0.9"/>
+</g>
+<ellipse class="blush" cx="60" cy="143.5" rx="10.4" ry="7.1" fill="#FFA9B5" opacity="0.62"/>
+<ellipse class="blush" cx="140" cy="143.5" rx="10.4" ry="7.1" fill="#FFA9B5" opacity="0.62"/>
+<path fill="#FF934C" d="M86.6,137.2 Q100,133.2 113.4,137.2 Q110.7,158.1 100,167.1 Q89.3,158.1 86.6,137.2Z"/>
+<path fill="#20355B" d="M59.4,95.7 C59.4,70.6 77.7,60.6 100,60.6 C122.3,60.6 140.6,70.6 140.6,95.7Z"/>
+<g clip-path="url(#pi12i-cap1)"><rect x="57.4" y="88.7" width="85.2" height="7" fill="#F3AE2F"/></g>
+<ellipse fill="#12213A" cx="100" cy="97.2" rx="45.5" ry="4.8"/>
+<g data-rig="armr" data-pivot="153.5 156.2">
+<path fill="#04B482" d="M0,0 C14,6.5 14.7,25.2 8.7,36 L-8.7,36 C-14.7,25.2 -14,6.5 0,0Z" transform="translate(153.5 156.2) rotate(-10)"/>
+<g data-rig="handr" data-pivot="159.7 191.6">
+<g class="spyglass" transform="translate(145.2 130.2) rotate(-30)">
+<rect fill="#F3AE2F" x="-8" y="0" width="16" height="54" rx="6.4"/>
+<ellipse fill="#A4E0F8" cx="0" cy="1.5" rx="6.7" ry="3.2"/>
+</g>
+<circle fill="#04B482" cx="159.7" cy="194.6" r="8.5"/>
+</g></g>
+</g>
+<g data-rig="legl" data-pivot="76.1 213">
+<ellipse fill="#FF934C" cx="76.1" cy="209" rx="14.2" ry="7.5"/>
+</g>
+<g data-rig="legr" data-pivot="123.9 213">
+<ellipse fill="#FF934C" cx="123.9" cy="209" rx="14.2" ry="7.5"/>
+</g>
+</g></g>
+</g>
+</svg>

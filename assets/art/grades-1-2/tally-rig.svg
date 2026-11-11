@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240" role="img" aria-labelledby="t d">
+<title id="t">Tally the hermit crab, idle, Grades 1-2</title>
+<desc id="d">Tally, a violet hermit crab with eyes on stalks, carries a pink shell marked with three counting dots.</desc>
+
+<g id="tally-g12-idle">
+<ellipse class="shadow" cx="100" cy="223" rx="75.7" ry="9.8" fill="#000" opacity="0.26"/>
+<g class="figure" transform="rotate(0 100 214)">
+<g data-rig="legl" data-pivot="65.7 214">
+<ellipse fill="#7155CF" cx="76" cy="208.5" rx="6.4" ry="12"/>
+<ellipse fill="#7155CF" cx="55.5" cy="210" rx="6.4" ry="12"/>
+</g>
+<g data-rig="legr" data-pivot="114.3 214">
+<ellipse fill="#7155CF" cx="104" cy="208.5" rx="6.4" ry="12"/>
+<ellipse fill="#7155CF" cx="124.5" cy="210" rx="6.4" ry="12"/>
+</g>
+<g data-rig="body" data-pivot="90 214">
+<path fill="#FFD4C4" d="M63.9,122.9 C63.9,60.7 104.3,42.1 135.3,42.1 C172.6,42.1 188.1,82.5 188.1,116.6 C188.1,153.9 157.1,166.3 126,166.3 C94.9,166.3 63.9,153.9 63.9,122.9Z"/>
+<circle fill="#FFD4C4" cx="138.4" cy="44.6" r="8.1"/>
+<circle fill="#7155CF" cx="103.8" cy="78.3" r="6"/>
+<circle fill="#7155CF" cx="128.5" cy="70.8" r="6"/>
+<circle fill="#7155CF" cx="151.9" cy="81.7" r="6"/>
+<rect fill="#9376E8" x="62.6" y="131" width="9" height="23.7" rx="4.5"/>
+<rect fill="#9376E8" x="108.4" y="131" width="9" height="23.7" rx="4.5"/>
+<ellipse fill="#9376E8" cx="90" cy="178.8" rx="63.8" ry="34.2"/>
+<circle fill="#FFFFFF" cx="67.1" cy="131" r="17.2"/>
+<circle fill="#FFFFFF" cx="112.9" cy="131" r="17.2"/>
+<g class="eye">
+<circle fill="#FFFFFF" cx="67.1" cy="131" r="17.2"/>
+<circle cx="67.4" cy="131.6" r="9.6" fill="#15264B"/>
+<circle cx="64.1" cy="128.1" r="3.7" fill="#fff"/>
+<circle cx="71.4" cy="135.6" r="1.6" fill="#fff" opacity="0.9"/>
+</g>
+<g class="eye">
+<circle fill="#FFFFFF" cx="112.9" cy="131" r="17.2"/>
+<circle cx="113.2" cy="131.6" r="9.6" fill="#15264B"/>
+<circle cx="109.9" cy="128.1" r="3.7" fill="#fff"/>
+<circle cx="117.2" cy="135.6" r="1.6" fill="#fff" opacity="0.9"/>
+</g>
+<path d="M84,175.8 Q90,181.8 96,175.8" fill="none" stroke="#4C2CB2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse class="blush" cx="58" cy="176.8" rx="9.8" ry="6.6" fill="#FFA9C3" opacity="0.62"/>
+<ellipse class="blush" cx="122" cy="176.8" rx="9.8" ry="6.6" fill="#FFA9C3" opacity="0.62"/>
+<g data-rig="arml" data-pivot="32.5 172.8">
+<path d="M32.5,172.8 L20.2,154.8" stroke="#9376E8" stroke-width="13" stroke-linecap="round" fill="none"/>
+<g data-rig="handl" data-pivot="20.2 154.8">
+<g class="claw" transform="translate(20.2 154.8) rotate(-38.7)">
+<circle fill="#9376E8" cx="0" cy="3.3" r="16.7"/>
+<path fill="#7155CF" d="M0,20.9 L-6,8.4 L6,8.4Z"/>
+</g></g></g>
+<g data-rig="armr" data-pivot="147.5 172.8">
+<path d="M147.5,172.8 L159.8,154.8" stroke="#9376E8" stroke-width="13" stroke-linecap="round" fill="none"/>
+<g data-rig="handr" data-pivot="159.8 154.8">
+<g class="claw" transform="translate(159.8 154.8) rotate(38.7)">
+<circle fill="#9376E8" cx="0" cy="3.3" r="16.7"/>
+<path fill="#7155CF" d="M0,20.9 L-6,8.4 L6,8.4Z"/>
+</g></g></g>
+</g></g></g>
+</svg>
