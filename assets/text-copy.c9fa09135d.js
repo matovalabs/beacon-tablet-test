@@ -386,6 +386,20 @@ export const RETENTION = {
   foundKeepsake: name => `You found a keepsake: ${name}.`,
   newOnCliff: name => `New on Lumi's cliff: ${name}.`,
   stopHere: "That's today's reading. You can stop here or read another.",
+  // The island at the top of the child's screens (version 0.7). A static count, never a timer.
+  islandLabel: 'This week',
+  islandWeek: (n, goal) => `${Math.min(n, goal)} of ${goal}`,
+  islandWeekLong: (n, goal) => (n >= goal ? "This week's reading goal is done." : `${n} of ${goal} reading days this week`),
+  islandReading: 'Reading',
+  islandOpen: 'Show this week',
+  islandClose: 'Close',
+  // The guide's mood (src/engine/retention.js guideMood). Always glad; never counts days away.
+  mood: {
+    cheer: name => `You read today. ${name} is cheering.`,
+    happy: name => `${name} is glad to see you.`,
+    welcome: name => `You're back. ${name} saved your spot.`,
+    rest: name => `${name} is resting while you read.`
+  },
   itemNames: {
     flowers: 'a patch of flowers', gull: 'two seagulls', kite: 'a kite', sailboat: 'a sailboat', bunting: 'a string of flags',
     telescope: 'a telescope', cottage: 'a little cottage', whale: 'a whale', balloon: 'a hot air balloon', moon: 'the moon and a bright star'
@@ -403,5 +417,28 @@ export const REMINDER = {
   hint: 'Off unless you turn it on. One quiet notification a day at the time you choose, set on this tablet. Nothing is sent anywhere. The first time, the tablet asks you to allow notifications for Beacon.',
   time: 'Time of day',
   hourLabel: hr => (hr === 12 ? '12 noon' : `${hr > 12 ? hr - 12 : hr} ${hr < 12 ? 'a.m.' : 'p.m.'}`),
-  notification: 'A short Beacon reading, whenever you are ready.'
+  notification: 'A short Beacon reading, whenever you are ready.',
+  // Used instead when the come-back score is low: lighter, still no counts and no missed days.
+  gentle: [
+    'An easy Beacon text is here whenever you like.',
+    'Pip saved a short, easy text for you.',
+    'Lumi is glowing. A short reading is ready if you want one.'
+  ],
+  // The kind sentences take turns, one a day (version 0.7). No counts, no missed days.
+  notifications: [
+    'A short Beacon reading, whenever you are ready.',
+    'Pip found a new text for you.',
+    'Lumi has a new step on her path for you.',
+    'Tally and Fizz have something fun to read.',
+    'A new Beacon text is ready when you are.'
+  ],
+  suggest: label => `Your reader usually reads around ${label}${label.endsWith('.') ? '' : '.'} Use that time?`,
+  useSuggested: label => `Use ${label}`,
+  suggestUsed: 'Done. The reminder now uses that time.',
+  paused: 'Reminders are paused because they were not used this week. Turn them back on any time.'
+};
+
+// Settings and privacy: a plain line about unexpected closes, counted on this device only (section 19).
+export const STABILITY = {
+  uncleanExits: n => `Beacon closed unexpectedly ${n} ${n === 1 ? 'time' : 'times'}. If this keeps happening, tell us.`
 };

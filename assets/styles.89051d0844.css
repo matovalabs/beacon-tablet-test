@@ -2674,3 +2674,118 @@ dialog.sheet.tall { max-height: 94dvh; }
   .card, .table-wrap { border: 1px solid #999999; break-inside: avoid; }
   .table-wrap { overflow: visible; }
 }
+
+/* Spacing 0.7 (November 16, 2026): more breathing room so screens do not feel crowded on a phone. */
+main { padding-left: 20px; padding-right: 20px; padding-top: 24px; }
+.topbar { margin-bottom: 20px; }
+.eyebrow { margin: 1.2em 0 0.45em; }
+.topbar + .eyebrow, main > .screen > .eyebrow:first-child { margin-top: 0.4em; }
+h1 { margin: 0.5em 0 0.6em; }
+.eyebrow + h1, .eyebrow + h2 { margin-top: 0.15em; }
+h1 + p, h1 + .lead { margin-top: 0; }
+p { margin: 0.6em 0; }
+.row-tools { margin: 12px 0 20px; }
+.choices { gap: 14px; }
+.form { gap: 8px; }
+.form > label:not(:first-child) { margin-top: 16px; }
+.form > .hint { margin-top: -2px; }
+.form > .btn.block { margin-top: 20px; }
+.counter { margin: 4px 0 0; }
+.tiles { gap: 12px; margin-top: 16px; }
+.tile.surprise { margin-top: 16px; }
+.tile { hyphens: manual; overflow-wrap: break-word; }
+.site-footer { gap: 4px 28px; padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px)); line-height: 1.4; }
+/* Narrow phones: interest names fit on two lines without breaking mid-word. */
+@media (max-width: 420px) {
+  .tiles:not(.subjects) .tile { padding: 10px; gap: 8px; font-size: 0.95rem; }
+  .tiles:not(.subjects) .tile-badge { width: 30px; height: 30px; border-radius: 8px; }
+}
+@media (min-width: 700px) {
+  main { padding-left: 32px; padding-right: 32px; padding-top: 32px; }
+  .topbar { margin-bottom: 24px; }
+}
+
+/* The island (logic spec section 19, version 0.7). A dark pill fixed at the top center of the child's
+   screens. It opens into a panel: the backdrop grows from the pill's own size at its top center, then the
+   content fades in. Transform and opacity only, with transitions, so a second tap reverses it mid-way.
+   Curve: the iOS drawer curve, which reads as a soft spring. Still when movement is off. */
+:root {
+  --island-ink: #060C1A;
+  --island-line: rgba(245, 241, 230, 0.16);
+  --ease-island: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+}
+body.has-island { padding-top: calc(env(safe-area-inset-top, 0px) + 60px); }
+.island-host {
+  position: fixed; z-index: 20; left: 0; right: 0; top: calc(env(safe-area-inset-top, 0px) + 8px);
+  display: flex; justify-content: center; pointer-events: none;
+  --island-sx: 0.4; --island-sy: 0.2;
+}
+.island-host[hidden] { display: none; }
+.island { position: relative; width: min(360px, calc(100vw - 24px)); display: flex; justify-content: center; }
+.island-pill {
+  position: relative; z-index: 2; pointer-events: auto;
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; max-width: 100%;
+  padding: 5px 16px 5px 5px; border-radius: 999px; border: 1px solid var(--island-line);
+  background: var(--island-ink); color: var(--cream); font: 800 0.95rem/1.2 var(--body);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  transition: transform 160ms ease-out, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  cursor: pointer;
+}
+button.island-pill:active { transform: scale(0.97); }
+.island-pill.quiet { cursor: default; transition: none; }
+.island-face {
+  width: 34px; height: 34px; flex: none; border-radius: 50%; object-fit: cover; object-position: 50% 6%;
+  background: var(--navy-surface); border: 1px solid var(--navy-line);
+}
+.island-dots { display: inline-flex; gap: 5px; }
+.island-dots .dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--amber); }
+.island-dots .dot.on { background: var(--amber); }
+.island-dots.big { gap: 8px; }
+.island-dots.big .dot { width: 16px; height: 16px; }
+.island-status { white-space: nowrap; letter-spacing: 0.01em; }
+
+/* The panel. Closed: hidden from tapping and from screen readers once the close has played. */
+.island-panel {
+  position: absolute; z-index: 1; top: 0; left: 0; right: 0; padding: 60px 18px 18px;
+  color: var(--cream); visibility: hidden; pointer-events: none;
+  transition: visibility 0s linear 360ms;
+}
+.island-bg {
+  position: absolute; inset: 0; border-radius: 28px; background: var(--island-ink); border: 1px solid var(--island-line);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  transform-origin: 50% 0; transform: scale(var(--island-sx), var(--island-sy)); opacity: 0;
+  transition: transform 300ms var(--ease-island), opacity 120ms linear 220ms;
+}
+.island-content {
+  position: relative; display: grid; gap: 8px;
+  opacity: 0; transform: translateY(-6px) scale(0.97); transform-origin: 50% 0;
+  transition: opacity 120ms ease-out, transform 160ms ease-out;
+}
+.island-host.open .island-panel { visibility: visible; pointer-events: auto; transition: visibility 0s; }
+.island-host.open .island-bg { transform: none; opacity: 1; transition: transform 420ms var(--ease-island), opacity 0s; }
+.island-host.open .island-content { opacity: 1; transform: none; transition: opacity 200ms ease-out 120ms, transform 300ms var(--ease-out-strong) 80ms; }
+.island-host.open .island-pill { background-color: transparent; border-color: transparent; box-shadow: none; }
+
+.island-content p { margin: 0; }
+.island-guide { display: flex; align-items: center; gap: 12px; }
+.island-guide-art { width: 64px; height: 76px; flex: none; object-fit: contain; }
+.island-mood { font-family: var(--heading); font-size: 1.15rem; font-weight: 600; line-height: 1.3; }
+.island-week { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+.island-strong { font-weight: 800; }
+.island-muted { color: var(--muted-dark); font-size: 0.95rem; }
+.island-earned { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--mint); }
+.island-keepsake-line { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+.island-keepsake { width: 28px; height: 28px; }
+.btn.island-cliff { margin-top: 6px; width: 100%; background: var(--navy-surface); color: var(--cream); border-color: var(--navy-line); }
+
+/* Movement off (the grown-up setting or the device): the island opens and closes at once. */
+body.still .island-pill, body.still .island-panel, body.still .island-bg, body.still .island-content,
+.island-host.quiet-host * { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .island-pill, .island-panel, .island-bg, .island-content { transition: none !important; }
+  button.island-pill:active { transform: none; }
+}
+/* Grown-up Settings: the suggested reminder time. */
+.note.suggest { display: grid; gap: 8px; }
+.note.suggest p { margin: 0; }

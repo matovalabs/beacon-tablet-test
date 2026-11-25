@@ -1,17 +1,17 @@
 // The Grown-up area: gate, Reports, Progress, Interests, Settings and privacy, Readers (section 12).
 import { h, s, icon } from './ui-dom.43bde315e2.js';
-import { screen, eyebrow, button, confirmDialog, formatDate, interestLabel, topicLabel, passageTitle, hasCheckin } from './ui-common.4acae333f8.js';
-import { interestEditor, subjectEditor, noticeView } from './ui-screens-onboard.8102361213.js';
-import { GATE, GROWNUP, T2, C3 } from './text-copy.5e71bb1047.js';
-import { buildReport, skillTotals, SKILL_NAMES, skillsFor, PROGRESS_HONEST, CLIPBOARD_LINE } from './text-report-text.b1d09bb2dc.js';
-import { subjectFor, learnerSubjects } from './engine-subjects.b9c5ff3bf4.js';
-import { levelOf } from './engine-select.dcc6fcf48a.js';
-import { SUBJECTS_COPY, SETTINGS_MEDIA } from './text-copy.5e71bb1047.js';
-import { exportSummary } from './state-summary.5fd4a894e6.js';
-import { checkNick, checkGrade, nickTaken } from './engine-nick.095b899fd9.js';
-import { changeGrade } from './engine-interests.7dd0456ab8.js';
-import { MAX_LEARNERS, LEVEL_MAX } from './engine-constants.f6f2fc2188.js';
-import { reminderSettings, syncReminder } from './ui-reminder.a8894c8223.js';
+import { screen, eyebrow, button, confirmDialog, formatDate, interestLabel, topicLabel, passageTitle, hasCheckin } from './ui-common.e7d8dca41b.js';
+import { interestEditor, subjectEditor, noticeView } from './ui-screens-onboard.9f26c01d0c.js';
+import { GATE, GROWNUP, T2, C3 } from './text-copy.c9fa09135d.js';
+import { buildReport, skillTotals, SKILL_NAMES, skillsFor, PROGRESS_HONEST, CLIPBOARD_LINE } from './text-report-text.22d8b7f676.js';
+import { subjectFor, learnerSubjects } from './engine-subjects.932f872442.js';
+import { levelOf } from './engine-select.50528d75d3.js';
+import { SUBJECTS_COPY, SETTINGS_MEDIA } from './text-copy.c9fa09135d.js';
+import { exportSummary } from './state-summary.b909dca5ef.js';
+import { checkNick, checkGrade, nickTaken } from './engine-nick.b48af625e5.js';
+import { changeGrade } from './engine-interests.16e5466d5f.js';
+import { MAX_LEARNERS, LEVEL_MAX } from './engine-constants.eeb1484d47.js';
+import { reminderSettings, syncReminder, stabilityNote } from './ui-reminder.d6e3842123.js';
 
 // The gate: a new multiplication each time. It stops a young child by accident; it is not security.
 function newSum() {
@@ -222,6 +222,7 @@ function settings(app) {
     toggle(app, 'motion', SETTINGS_MEDIA.motion, SETTINGS_MEDIA.motionHint),
     toggle(app, 'voice', SETTINGS_MEDIA.voice, SETTINGS_MEDIA.voiceHint),
     reminderSettings(app),
+    stabilityNote(app),
     h('h2', { text: GROWNUP.summaryTitle }),
     h('a', { class: 'btn secondary', href: '#/grownup/summary', text: GROWNUP.summaryOpen }),
     h('h2', { text: GROWNUP.clearTitle }),

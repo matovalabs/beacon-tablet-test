@@ -1,16 +1,17 @@
 // Boot: storage, routing, and the page-level listeners for the attention signals.
 // Signals are recorded only while a quest runs (Telemetry ignores them otherwise).
-import { BANK, INTERESTS, TOPIC_MAP, SITE, SUBJECTS_AVAILABLE, GLOSSARY, PROMPT_AUDIO, MEDIA } from './data.dc8f6dbdee.js';
-import { Store, safeStorage } from './state-store.72bdd9902b.js';
-import { Telemetry } from './engine-telemetry.751c13a370.js';
+import { BANK, INTERESTS, TOPIC_MAP, SITE, SUBJECTS_AVAILABLE, GLOSSARY, PROMPT_AUDIO, MEDIA } from './data.5b9c6d5db4.js';
+import { Store, safeStorage } from './state-store.e3beb3fc2a.js';
+import { Telemetry } from './engine-telemetry.ed1b899285.js';
 import { systemClock } from './engine-clock.cb87acb031.js';
-import { STORAGE_KEY, TAB_KEY } from './engine-constants.f6f2fc2188.js';
-import { BANNERS } from './text-copy.5e71bb1047.js';
+import { STORAGE_KEY, TAB_KEY } from './engine-constants.eeb1484d47.js';
+import { BANNERS } from './text-copy.c9fa09135d.js';
 import { h, clear } from './ui-dom.43bde315e2.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
-import { celebrate, motionOn } from './ui-stage.b19732b10d.js';
-import { routes, guard } from './ui-routes.c63a64a98d.js';
-import { syncReminder } from './ui-reminder.a8894c8223.js';
+import { celebrate, motionOn } from './ui-stage.c3887dbf84.js';
+import { routes, guard } from './ui-routes.b059151e6c.js';
+import { syncReminder, startSignals, pageHidden, pageShown } from './ui-reminder.d6e3842123.js';
+import { renderIsland } from './ui-island.075eb56acc.js';
 
 const storage = safeStorage(() => window.localStorage);
 const store = new Store(storage);
@@ -81,6 +82,7 @@ export const app = {
     document.body.className = (node.dataset.theme === 'parent' ? 'parent' : 'child') + (motionOn(this) ? '' : ' still') + (r.name === 'quest' ? ' in-quest' : '');
     main.append(node);
     renderBanner(this);
+    renderIsland(this, r.name);
     if (this.pausedByOtherTab) showPause(this);
     const focusEl = main.querySelector('[data-autofocus]') || main.querySelector('h1');
     if (focusEl) { if (!focusEl.hasAttribute('tabindex') && focusEl.tagName === 'H1') focusEl.setAttribute('tabindex', '-1'); focusEl.focus({ preventScroll: false }); }
@@ -121,8 +123,11 @@ function showPause(a) {
 }
 
 // Attention signals (logic spec 8.2 and 8.3).
-document.addEventListener('visibilitychange', () => (document.visibilityState === 'hidden' ? app.tel.hidden() : app.tel.visible()));
-window.addEventListener('pagehide', () => app.tel.hidden());
+// The same events close and open the session for the come-back counts (section 19): counts only.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') { app.tel.hidden(); pageHidden(app); } else { app.tel.visible(); pageShown(app); }
+});
+window.addEventListener('pagehide', () => { app.tel.hidden(); pageHidden(app); });
 window.addEventListener('pageshow', () => app.tel.visible());
 window.addEventListener('blur', () => app.tel.blur());
 window.addEventListener('focus', () => app.tel.visible());
@@ -156,5 +161,6 @@ window.addEventListener('storage', e => {
 });
 
 window.addEventListener('hashchange', () => app.render());
+startSignals(app); // the come-back counts, on this device only
 syncReminder(app); // in the apps, keep the scheduled reminder in step with the saved setting
 app.render();

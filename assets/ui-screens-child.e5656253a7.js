@@ -1,21 +1,23 @@
 // C6 Today, My interests and subjects, Switch reader, and the quest run (section 7).
 import { h, s, icon, clear } from './ui-dom.43bde315e2.js';
-import { passageBody, wordCard, openWordHelp, stopVoice } from './ui-word-help.847b05b719.js';
-import { stage, celebrate } from './ui-stage.b19732b10d.js';
-import { award } from './engine-milestones.1beec5fbec.js';
-import { countReadingDay, keepsakeFor, newlyUnlocked } from './engine-retention.44d90a9335.js';
-import { weekCard, rewardsCard } from './ui-rewards.554b0d3302.js';
-import { screen, eyebrow, button, character, topbar, progressBar, confirmDialog, interestLabel, topicLabel, hasCheckin } from './ui-common.4acae333f8.js';
+import { passageBody, wordCard, openWordHelp, stopVoice } from './ui-word-help.535ed0da96.js';
+import { stage, celebrate } from './ui-stage.c3887dbf84.js';
+import { award } from './engine-milestones.b99300f35d.js';
+import { countReadingDay, keepsakeFor, newlyUnlocked, countReadHour } from './engine-retention.093e30f79e.js';
+import { noteFinishedText } from './ui-reminder.d6e3842123.js';
+import { peekIsland } from './ui-island.075eb56acc.js';
+import { weekCard, rewardsCard } from './ui-rewards.ac30fa30de.js';
+import { screen, eyebrow, button, character, topbar, progressBar, confirmDialog, interestLabel, topicLabel, hasCheckin } from './ui-common.e7d8dca41b.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
-import { interestEditor, subjectEditor } from './ui-screens-onboard.8102361213.js';
-import { TODAY, READ, DUMP, QUESTION, FEEDBACK, SUMMARY, SKILL_KID, SKILL_EYEBROW, C3, BANNERS, SUBJECTS_COPY, MILESTONES, CELEBRATE } from './text-copy.5e71bb1047.js';
-import { chooseNext, applyFinishedQuest, levelOf, activeSubject, nextQuestNumber } from './engine-select.dcc6fcf48a.js';
-import { QuestRun } from './engine-quest.4e9b7021a4.js';
-import { moreLikeThis, lessLikeThis, bandForGrade } from './engine-interests.7dd0456ab8.js';
-import { outcome } from './engine-levels.3311cee783.js';
-import { focusSkill } from './text-report-text.b1d09bb2dc.js';
-import { subjectFor, learnerSubjects, hasCheckinFor } from './engine-subjects.b9c5ff3bf4.js';
-import { DUMP_MAX_CHARS, QUEST_QUESTIONS, LEVEL_MAX } from './engine-constants.f6f2fc2188.js';
+import { interestEditor, subjectEditor } from './ui-screens-onboard.9f26c01d0c.js';
+import { TODAY, READ, DUMP, QUESTION, FEEDBACK, SUMMARY, SKILL_KID, SKILL_EYEBROW, C3, BANNERS, SUBJECTS_COPY, MILESTONES, CELEBRATE } from './text-copy.c9fa09135d.js';
+import { chooseNext, applyFinishedQuest, levelOf, activeSubject, nextQuestNumber } from './engine-select.50528d75d3.js';
+import { QuestRun } from './engine-quest.0d2ee7e56d.js';
+import { moreLikeThis, lessLikeThis, bandForGrade } from './engine-interests.16e5466d5f.js';
+import { outcome } from './engine-levels.93a2487050.js';
+import { focusSkill } from './text-report-text.22d8b7f676.js';
+import { subjectFor, learnerSubjects, hasCheckinFor } from './engine-subjects.932f872442.js';
+import { DUMP_MAX_CHARS, QUEST_QUESTIONS, LEVEL_MAX } from './engine-constants.eeb1484d47.js';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 
@@ -278,13 +280,15 @@ function finishQuest(app) {
   let fresh = [];
   let rewards = { keepsake: null, unlocked: [] };
   app.store.updateLearner(run.learnerId, l => {
-    const day = countReadingDay(applyFinishedQuest(l, questRecord), questRecord.at);
+    const day = countReadingDay(countReadHour(applyFinishedQuest(l, questRecord), questRecord.at), questRecord.at);
     const r = award({ ...day.learner, wordsExplored: (l.wordsExplored || 0) + words }, app.clock.nowIso());
     fresh = r.fresh;
     rewards = { keepsake: day.newDay ? keepsakeFor(r.learner.readingDays) : null, unlocked: newlyUnlocked(l, r.learner) };
     return r.learner;
   });
   app.lastRewards = rewards;
+  noteFinishedText(app);
+  peekIsland(app, questRecord.kind);
   const S = subjectFor(questRecord.subject);
   const lines = fresh.map(id => MILESTONES.label(id, x => subjectFor(x).label));
   if (questRecord.kind === 'quest' && questRecord.levelEnd > questRecord.levelStart) {

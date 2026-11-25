@@ -1,4 +1,4 @@
-import { NICK_MAX } from './engine-constants.f6f2fc2188.js';
+import { NICK_MAX } from './engine-constants.eeb1484d47.js';
 
 // One word, 1 to 20 characters, letters and a hyphen only (section 2, T2).
 // Spaces, digits, symbols and emoji are refused, so a full name, an email or a phone number cannot be typed.

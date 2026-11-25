@@ -1,15 +1,17 @@
 // The saved model: logic spec section 3. validateState rejects any field outside it.
-import { STATE_VERSION, MAX_LEARNERS, MAX_QUESTS, LEVEL_MIN, LEVEL_MAX, REMINDER_FIRST_HOUR, REMINDER_LAST_HOUR, REMINDER_DEFAULT_HOUR } from './engine-constants.f6f2fc2188.js';
-import { readingDaysFrom } from './engine-retention.44d90a9335.js';
-import { SUBJECT_IDS, ALL_SKILLS } from './engine-subjects.b9c5ff3bf4.js';
+import { STATE_VERSION, MAX_LEARNERS, MAX_QUESTS, LEVEL_MIN, LEVEL_MAX, REMINDER_FIRST_HOUR, REMINDER_LAST_HOUR, REMINDER_DEFAULT_HOUR } from './engine-constants.eeb1484d47.js';
+import { readingDaysFrom, readHoursFrom, emptyReadHours, emptySignals, HOURS } from './engine-retention.093e30f79e.js';
+import { SUBJECT_IDS, ALL_SKILLS } from './engine-subjects.932f872442.js';
 
 const KEYS = {
   state: ['version', 'consent', 'settings', 'learners', 'activeLearnerId'],
-  settings: ['motion', 'voice', 'reminder'],
-  reminder: ['on', 'hour'],
+  settings: ['motion', 'voice', 'reminder', 'signals'],
+  signals: ['launches', 'reminderLedToRead', 'reminderNoRead', 'pendingReminderDay', 'uncleanExits', 'sessionOpen'],
+  launches: ['reminder', 'icon'],
+  reminder: ['on', 'hour', 'paused', 'unanswered', 'lastCounted'],
   milestone: ['id', 'at'],
   consent: ['at', 'noticeVersion'],
-  learner: ['id', 'nick', 'grade', 'subjects', 'subject', 'levels', 'interests', 'surprise', 'interestLog', 'topicLastUsed', 'topicLessUntil', 'topicMore', 'seen', 'quests', 'milestones', 'wordsExplored', 'readingDays', 'lastReadingDay'],
+  learner: ['id', 'nick', 'grade', 'subjects', 'subject', 'levels', 'interests', 'surprise', 'interestLog', 'topicLastUsed', 'topicLessUntil', 'topicMore', 'seen', 'quests', 'milestones', 'wordsExplored', 'readingDays', 'lastReadingDay', 'readHours'],
   logEntry: ['at', 'from', 'to'],
   quest: ['id', 'n', 'at', 'kind', 'subject', 'passageId', 'topic', 'interestId', 'repeat', 'levelStart', 'levelEnd', 'right', 'of', 'rows', 'attention'],
   row: ['n', 'skill', 'ok', 'activeMs', 'totalMs', 'awayCount', 'awayMs', 'longestAwayMs', 'copy', 'lookedBack', 'helperTaps', 'helperOnTested', 'fastMiss', 'suspect'],
@@ -23,15 +25,18 @@ export function emptyState() {
 }
 
 // Grown-up settings: movement in the scenes and the recorded voice, both on by default, and the daily
-// reminder (apps only), off unless a grown-up turns it on.
+// reminder (apps only), off unless a grown-up turns it on. paused: the reminder turned itself off after
+// 7 days in a row with no reading; unanswered: that count so far; lastCounted: the last day counted.
+// signals: the come-back counts kept on this device only (section 19); counts, one day and booleans.
+export const defaultReminder = () => ({ on: false, hour: REMINDER_DEFAULT_HOUR, paused: false, unanswered: 0, lastCounted: null });
 export function defaultSettings() {
-  return { motion: true, voice: true, reminder: { on: false, hour: REMINDER_DEFAULT_HOUR } };
+  return { motion: true, voice: true, reminder: defaultReminder(), signals: emptySignals() };
 }
 
 export function newLearner(id, nick, grade) {
   return {
     id, nick, grade, subjects: [], subject: 'reading', levels: {},
-    interests: [], surprise: false, interestLog: [], milestones: [], wordsExplored: 0, readingDays: 0, lastReadingDay: null,
+    interests: [], surprise: false, interestLog: [], milestones: [], wordsExplored: 0, readingDays: 0, lastReadingDay: null, readHours: emptyReadHours(),
     topicLastUsed: {}, topicLessUntil: {}, topicMore: [], seen: [], quests: []
   };
 }
@@ -41,6 +46,7 @@ const isInt = v => Number.isInteger(v);
 const isNum = v => typeof v === 'number' && Number.isFinite(v) && v >= 0;
 const isStr = v => typeof v === 'string';
 const isBool = v => typeof v === 'boolean';
+const DAY = /^\d{4}-\d{2}-\d{2}$/;
 const ELEMENTS = ['passage', 'question', 'choice', 'other'];
 const SKILLS = ALL_SKILLS;
 
@@ -108,6 +114,7 @@ function checkLearner(errors, w, l) {
   else l.milestones.forEach((m, i) => { if (exact(errors, `${w}.milestones[${i}]`, m, KEYS.milestone) && (!isStr(m.id) || !isStr(m.at))) errors.push(`${w}.milestones[${i}] is malformed`); });
   if (!isInt(l.wordsExplored) || l.wordsExplored < 0) errors.push(`${w}.wordsExplored must be a whole number`);
   if (!isInt(l.readingDays) || l.readingDays < 0) errors.push(`${w}.readingDays must be a whole number`);
+  if (!Array.isArray(l.readHours) || l.readHours.length !== HOURS || !l.readHours.every(n => isInt(n) && n >= 0)) errors.push(`${w}.readHours must be 24 whole numbers`);
   if (!(l.lastReadingDay === null || (isStr(l.lastReadingDay) && /^\d{4}-\d{2}-\d{2}$/.test(l.lastReadingDay)))) errors.push(`${w}.lastReadingDay must be a day or null`);
   if (!Array.isArray(l.quests) || l.quests.length > MAX_QUESTS) errors.push(`${w}.quests must be a list of at most ${MAX_QUESTS}`);
   else l.quests.forEach((q, i) => checkQuest(errors, `${w}.quests[${i}]`, q));
@@ -120,7 +127,13 @@ export function validateState(s) {
   if (exact(errors, 'settings', s.settings, KEYS.settings)) {
     if (!isBool(s.settings.motion) || !isBool(s.settings.voice)) errors.push('settings must be true or false');
     const r = s.settings.reminder;
-    if (exact(errors, 'settings.reminder', r, KEYS.reminder) && (!isBool(r.on) || !isInt(r.hour) || r.hour < REMINDER_FIRST_HOUR || r.hour > REMINDER_LAST_HOUR)) errors.push('settings.reminder is malformed');
+    if (exact(errors, 'settings.reminder', r, KEYS.reminder) && (!isBool(r.on) || !isInt(r.hour) || r.hour < REMINDER_FIRST_HOUR || r.hour > REMINDER_LAST_HOUR ||
+      !isBool(r.paused) || !isInt(r.unanswered) || r.unanswered < 0 || !(r.lastCounted === null || (isStr(r.lastCounted) && DAY.test(r.lastCounted))))) errors.push('settings.reminder is malformed');
+    const g = s.settings.signals;
+    const count = n => isInt(n) && n >= 0;
+    if (exact(errors, 'settings.signals', g, KEYS.signals) && exact(errors, 'settings.signals.launches', g.launches, KEYS.launches) &&
+      (!count(g.launches.reminder) || !count(g.launches.icon) || !count(g.reminderLedToRead) || !count(g.reminderNoRead) || !count(g.uncleanExits) ||
+       !isBool(g.sessionOpen) || !(g.pendingReminderDay === null || (isStr(g.pendingReminderDay) && DAY.test(g.pendingReminderDay))))) errors.push('settings.signals is malformed');
   }
   if (s.consent !== null && exact(errors, 'consent', s.consent, KEYS.consent) && (!isStr(s.consent.at) || !isStr(s.consent.noticeVersion))) errors.push('consent is malformed');
   if (!Array.isArray(s.learners) || s.learners.length > MAX_LEARNERS) errors.push(`learners must be a list of at most ${MAX_LEARNERS}`);
@@ -132,14 +145,26 @@ export function validateState(s) {
 // Migration by version. Version 2 added subjects: version 1 data was all reading.
 export function migrate(raw) {
   if (raw && raw.version === STATE_VERSION) return raw;
-  // Version 4 added reading days (counted from the quests already saved) and the daily reminder setting.
-  if (raw && raw.version === 3 && Array.isArray(raw.learners)) {
+  // Version 5 added the hour counts of finished texts (from the quests already saved, hour only) and the
+  // reminder's pause: the saved reminder keeps its on and hour, and starts with nothing counted. It also
+  // added the come-back counts (settings.signals), starting at 0.
+  if (raw && raw.version === 4 && Array.isArray(raw.learners)) {
+    const old = (raw.settings && raw.settings.reminder) || {};
     return {
       ...raw,
-      version: 4,
-      settings: { ...defaultSettings(), ...(raw.settings || {}), reminder: defaultSettings().reminder },
-      learners: raw.learners.map(l => ({ ...l, ...readingDaysFrom(l && l.quests) }))
+      version: 5,
+      settings: { ...defaultSettings(), ...(raw.settings || {}), reminder: { ...defaultReminder(), on: old.on === true, hour: Number.isInteger(old.hour) ? old.hour : defaultReminder().hour }, signals: emptySignals() },
+      learners: raw.learners.map(l => ({ ...l, readHours: readHoursFrom(l && l.quests) }))
     };
+  }
+  // Version 4 added reading days (counted from the quests already saved) and the daily reminder setting.
+  if (raw && raw.version === 3 && Array.isArray(raw.learners)) {
+    return migrate({
+      ...raw,
+      version: 4,
+      settings: { motion: true, voice: true, ...(raw.settings || {}), reminder: { on: false, hour: REMINDER_DEFAULT_HOUR } },
+      learners: raw.learners.map(l => ({ ...l, ...readingDaysFrom(l && l.quests) }))
+    });
   }
   // Version 3 added milestones, a words-explored count and grown-up settings.
   if (raw && raw.version === 2 && Array.isArray(raw.learners)) {
