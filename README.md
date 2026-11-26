@@ -10,6 +10,12 @@ Beacon sends nothing to us or to anyone else. Your child's results stay on your 
 <img src="screenshots/ipad-lumis-cliff.png" width="250" alt="Lumi's cliff on an iPad: Lumi the lighthouse stands on a grassy cliff with a kite, flags, a telescope and a sailboat added as the child read.">
 </p>
 
+## New in version 0.8.0
+
+- The guides dress for the seasons. Each wears a small accessory that walks with them, such as a scarf in winter or a sun hat in summer, and their home scenes get a few decorations.
+- In the Grown-up area, under Settings and privacy, you can choose holidays your family celebrates. There are 13 to pick from, and all are off unless you turn them on. A chosen holiday's look shows for a few days around the date.
+- Nothing appears on reading or question screens, and everything stays on the tablet.
+
 ## New in version 0.7.0
 
 - A small status pill at the top of the screen shows this week's reading days and, during a quest, which question your child is on. Tap it to see the week, the total reading days and today's keepsake. It never moves while your child reads or answers.
@@ -29,12 +35,12 @@ Beacon sends nothing to us or to anyone else. Your child's results stay on your 
 
 ## Install on an Android or Amazon Fire tablet
 
-1. On the tablet, tap this link to download the app: [Beacon-test-0.7.0.apk](https://github.com/matovalabs/beacon-tablet-test/releases/download/v0.7.0-preview/Beacon-test-0.7.0.apk) (46 MB).
+1. On the tablet, tap this link to download the app: [Beacon-test-0.8.0.apk](https://github.com/matovalabs/beacon-tablet-test/releases/download/v0.8.0-preview/Beacon-test-0.8.0.apk) (46 MB).
 2. Open the downloaded file. The tablet asks whether to allow installs from the app you used to open it (for example Chrome or Files). Allow it, go back, and tap Install. On a Fire tablet the setting is under Settings > Security & Privacy > Apps from Unknown Sources.
 3. If a warning says the app comes from an unknown developer, tap More details, then Install anyway. It is our test app, and it is not in the Play Store yet.
 4. Open Beacon from the home screen. You can turn the install setting back off afterwards.
 
-Already have an older version? Install 0.7.0 the same way. It replaces the old version and keeps your child's progress.
+Already have an older version? Install 0.8.0 the same way. It replaces the old version and keeps your child's progress.
 
 ## Use it on an iPad
 
@@ -50,4 +56,4 @@ Open Beacon, tap Grown-ups, then Settings and privacy, then Clear data. On an An
 
 Questions: ian@matovagroup.com
 
-Checksum (SHA-256) of version 0.7.0, for anyone who wants to check the file: `6c97c8f1f283bdfcdd7c449beb5c059496374f0f7bda74349cfb6d80c286900b`
+Checksum (SHA-256) of version 0.8.0, for anyone who wants to check the file: `17aa796b7a3e942a0e1765c7dbee7659bd4e8fb52563ded7161c825af743b5d6`
