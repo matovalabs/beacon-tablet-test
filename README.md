@@ -1,6 +1,6 @@
 # Beacon tablet test
 
-Beacon is an early test of a learning app for children in grades 1 to 12 (ages 6 to 18), made by Matova. Children practice reading, math, science and social studies. This page is for the families we invited to try it.
+Beacon is an early test of a learning app for children in grades 1 to 12 (ages 6 to 18), made by Matova. Children practice reading, math, science and social studies, plus economics, government, money and accounting. This page is for the families we invited to try it.
 
 Beacon sends nothing to us or to anyone else. Your child's results stay on your tablet.
 
@@ -9,6 +9,12 @@ Beacon sends nothing to us or to anyone else. Your child's results stay on your 
 <img src="screenshots/android-reading.png" width="250" alt="A short reading text about a code from ancient Rome, with a few words dotted underneath for the word helper.">
 <img src="screenshots/ipad-lumis-cliff.png" width="250" alt="Lumi's cliff on an iPad: Lumi the lighthouse stands on a grassy cliff with a kite, flags, a telescope and a sailboat added as the child read.">
 </p>
+
+## New in version 0.10.0
+
+- Four new subjects: Economics (grades 1 to 12), Government (grades 3 to 12), Money (grades 1 to 12) and Accounting (grades 9 to 12). A subject outside your child's grade stays hidden.
+- Three new guides lead them: Marlo the pelican (Economics), Juno the spoonbill (Government) and Ivy the octopus (Money and Accounting).
+- The new subjects start with 10 texts each, and more are added over time.
 
 ## New in version 0.9.0
 
@@ -40,12 +46,12 @@ Beacon sends nothing to us or to anyone else. Your child's results stay on your 
 
 ## Install on an Android or Amazon Fire tablet
 
-1. On the tablet, tap this link to download the app: [Beacon-test-0.9.0.apk](https://github.com/matovalabs/beacon-tablet-test/releases/download/v0.9.0-preview/Beacon-test-0.9.0.apk) (46 MB).
+1. On the tablet, tap this link to download the app: [Beacon-test-0.10.0.apk](https://github.com/matovalabs/beacon-tablet-test/releases/download/v0.10.0-preview/Beacon-test-0.10.0.apk) (46 MB).
 2. Open the downloaded file. The tablet asks whether to allow installs from the app you used to open it (for example Chrome or Files). Allow it, go back, and tap Install. On a Fire tablet the setting is under Settings > Security & Privacy > Apps from Unknown Sources.
 3. If a warning says the app comes from an unknown developer, tap More details, then Install anyway. It is our test app, and it is not in the Play Store yet.
 4. Open Beacon from the home screen. You can turn the install setting back off afterwards.
 
-Already have an older version? Install 0.9.0 the same way. It replaces the old version and keeps your child's progress.
+Already have an older version? Install 0.10.0 the same way. It replaces the old version and keeps your child's progress.
 
 ## Use it on an iPad
 
@@ -61,4 +67,4 @@ Open Beacon, tap Grown-ups, then Settings and privacy, then Clear data. On an An
 
 Questions: ian@matovagroup.com
 
-Checksum (SHA-256) of version 0.9.0, for anyone who wants to check the file: `d343ef23c566b6c603d71b8a3aaff24e5c2f015582fe4008098bd24b6fbebe06`
+Checksum (SHA-256) of version 0.10.0, for anyone who wants to check the file: `ce8413577e51625569ab7912ea0877beb60ed67324a210345cc639bc9b70e3c3`
