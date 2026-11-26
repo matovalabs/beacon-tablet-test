@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240" role="img" aria-labelledby="t d">
+<title id="t">Marlo the brown pelican, oops, Grades 9-12</title>
+<desc id="d">Marlo, the pelican, scratches under his crest with a wing and a small wry look: a tricky one, not a problem.</desc>
+<defs><clipPath id="ma912o-hd1"><circle cx="100" cy="91" r="23.2"/></clipPath><clipPath id="ma912o-lid2"><path d="M80.9,83.7 A7.1,7.1 0 1 0 91.1,83.7Z"/></clipPath><clipPath id="ma912o-lid3"><path d="M108.9,83.7 A7.1,7.1 0 1 0 119.1,83.7Z"/></clipPath></defs>
+<g id="marlo-g912-oops">
+<g class="figure" transform="rotate(4 100 213)">
+<rect fill="#5590E0" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" x="78.6" y="195" width="5" height="15" rx="2.5"/>
+<ellipse fill="#E1A432" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="81.1" cy="209.5" rx="15" ry="7"/>
+<rect fill="#5590E0" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" x="116.4" y="195" width="5" height="15" rx="2.5"/>
+<ellipse fill="#E1A432" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="118.9" cy="209.5" rx="15" ry="7"/>
+<g class="limb limb-l" data-pivot="61.6 130">
+<path fill="#5590E0" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" d="M0,0 C12,8.6 12.6,37.1 0,47.6 C-12.6,37.1 -12,8.6 0,0Z" transform="translate(61.6 130) rotate(14)"/>
+</g>
+<path fill="#5590E0" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" d="M100,98 C130.7,98 142.6,125.8 142.6,159.8 C142.6,185.3 129.8,201 100,201 C70.2,201 57.4,185.3 57.4,159.8 C57.4,125.8 69.3,98 100,98Z"/>
+<ellipse fill="#F4F1E7" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="100" cy="163.9" rx="27.3" ry="30.9"/>
+<g transform="rotate(-18 100 67.8)">
+<ellipse fill="#F4F1E7" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="100" cy="62.8" rx="4.2" ry="9"/>
+</g>
+<g transform="rotate(6 100 67.8)">
+<ellipse fill="#F4F1E7" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="100" cy="62.8" rx="4.2" ry="9"/>
+</g>
+<circle fill="#5590E0" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" cx="100" cy="91" r="23.2"/>
+<g clip-path="url(#ma912o-hd1)"><ellipse cx="100" cy="78.2" rx="25.5" ry="14.4" fill="#F4F1E7"/></g>
+<circle cx="100" cy="91" r="23.2" fill="none" stroke="#F5F1E6" stroke-width="3.2"/>
+<g class="eye">
+<path fill="#F4F1E7" d="M80.9,83.7 A7.1,7.1 0 1 0 91.1,83.7Z"/>
+<g clip-path="url(#ma912o-lid2)">
+<circle cx="84.3" cy="90" r="4" fill="#16223B"/>
+</g>
+<path d="M80.4,83.7 L91.6,83.7" fill="none" stroke="#16223B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g class="eye">
+<path fill="#F4F1E7" d="M108.9,83.7 A7.1,7.1 0 1 0 119.1,83.7Z"/>
+<g clip-path="url(#ma912o-lid3)">
+<circle cx="112.3" cy="90" r="4" fill="#16223B"/>
+</g>
+<path d="M108.4,83.7 L119.6,83.7" fill="none" stroke="#16223B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path d="M81.3,75.5 Q86,69.5 90.6,75.5" fill="none" stroke="#16223B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="rotate(0 86 74)"/>
+<path d="M109.8,80.5 Q114,74.5 118.3,80.5" fill="none" stroke="#16223B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="rotate(0 114 79)"/>
+<g class="bill" transform="translate(101 98.9) rotate(46)">
+<path fill="#F4F1E7" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" d="M1,2.4 Q24,18 49.1,3.5Z"/>
+<path fill="#E1A432" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" d="M-3,-7.8 Q28.5,-6.7 57.1,-0.9 Q63,2.4 56.1,5.9 L-3,4.7Z"/>
+<circle fill="#B17617" cx="56.6" cy="2.2" r="2.5"/>
+<path d="M6.3,-0.9 L46.8,0.9" fill="none" stroke="#B17617" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+</g>
+<g class="limb limb-r" data-pivot="134.1 128">
+<path fill="#5590E0" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" d="M0,0 C13,9 13.7,39 0,50 C-13.7,39 -13,9 0,0Z" transform="translate(134.1 128) rotate(-196)"/>
+</g>
+<g class="scale" transform="translate(53.1 164.1) scale(1)">
+<circle cx="0" cy="0" r="4" fill="none" stroke="#E1A432" stroke-width="2.6"/>
+<rect fill="#E1A432" x="-1.5" y="3.5" width="3" height="9" rx="1.5"/>
+<path d="M-19,6.8 L-26,20.8 M-19,6.8 L-12,20.8" fill="none" stroke="#E1A432" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill="#E1A432" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" d="M-29,20.8 Q-19,29.8 -9,20.8Z"/>
+<path d="M19,19.2 L12,33.2 M19,19.2 L26,33.2" fill="none" stroke="#E1A432" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill="#E1A432" stroke="#F5F1E6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" d="M9,33.2 Q19,42.2 29,33.2Z"/>
+<path d="M-19,6.8 L19,19.2" stroke="#F5F1E6" stroke-width="9.8" stroke-linecap="round"/>
+<path d="M-19,6.8 L19,19.2" stroke="#E1A432" stroke-width="3.4" stroke-linecap="round"/>
+<circle fill="#E1A432" cx="0" cy="13" r="3"/>
+</g>
+</g></g>
+</svg>

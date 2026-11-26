@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240" role="img" aria-labelledby="t d">
+<title id="t">Juno the roseate spoonbill, idle, Grades 1-2</title>
+<desc id="d">Juno, a rose-pink spoonbill with a long spoon-shaped bill, stands holding a small brass meeting bell.</desc>
+
+<g id="juno-g12-idle">
+<ellipse class="shadow" cx="100" cy="223" rx="50.2" ry="6.5" fill="#000" opacity="0.26"/>
+<g class="figure" transform="rotate(0 100 213)">
+<g data-rig="body" data-pivot="100 213">
+<g data-rig="armr" data-pivot="141.2 159.6">
+<path fill="#D2558D" d="M0,0 C11,5.2 11.6,20.3 6.8,29.1 L-6.8,29.1 C-11.6,20.3 -11,5.2 0,0Z" transform="translate(141.2 159.6) rotate(-12)"/>
+<g data-rig="handr" data-pivot="147.2 188">
+<circle fill="#C33C76" cx="147.2" cy="190.5" r="7"/>
+</g></g>
+<rect fill="#EA67A2" x="86.3" y="115.5" width="27.3" height="34.2" rx="13.7"/>
+<path fill="#EA67A2" d="M100,135.6 C134.5,135.6 147.9,150.3 147.9,168.2 C147.9,184.7 133.5,194.8 100,194.8 C66.5,194.8 52.1,184.7 52.1,168.2 C52.1,150.3 65.5,135.6 100,135.6Z"/>
+<ellipse fill="#FABED7" cx="100" cy="172.3" rx="29.7" ry="17.8"/>
+<circle fill="#EA67A2" cx="100" cy="115.5" r="32.5"/>
+<g class="eye">
+<circle fill="#FFFFFF" cx="85.1" cy="111.6" r="12.7"/>
+<circle cx="85.3" cy="112" r="7.1" fill="#15264B"/>
+<circle cx="82.9" cy="109.4" r="2.7" fill="#fff"/>
+<circle cx="88.3" cy="115" r="1.2" fill="#fff" opacity="0.9"/>
+</g>
+<g class="eye">
+<circle fill="#FFFFFF" cx="114.9" cy="111.6" r="12.7"/>
+<circle cx="115.1" cy="112" r="7.1" fill="#15264B"/>
+<circle cx="112.7" cy="109.4" r="2.7" fill="#fff"/>
+<circle cx="118.1" cy="115" r="1.2" fill="#fff" opacity="0.9"/>
+</g>
+<ellipse class="blush" cx="73" cy="123.7" rx="9.1" ry="6.2" fill="#FFA9C3" opacity="0.62"/>
+<ellipse class="blush" cx="127" cy="123.7" rx="9.1" ry="6.2" fill="#FFA9C3" opacity="0.62"/>
+<g class="bill" transform="translate(102 129.1) rotate(64)">
+<path fill="#F7DEAA" d="M-2,-4.7 L41.1,-3.3 C45.1,-10.4 56.1,-9.5 56.1,0 C56.1,9.5 45.1,10.4 41.1,3.3 L-2,4.7Z"/>
+</g>
+<g data-rig="arml" data-pivot="59.8 159.6">
+<path fill="#D2558D" d="M0,0 C11,5.5 11.6,21.3 6.8,30.5 L-6.8,30.5 C-11.6,21.3 -11,5.5 0,0Z" transform="translate(59.8 159.6) rotate(22)"/>
+<g data-rig="handl" data-pivot="48.4 187.8">
+<g class="bell" transform="translate(48.4 189.8) rotate(0) scale(1)">
+<path d="M0,0 L0,9" fill="none" stroke="#D2975B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill="#F3AE2F" d="M-10,24 C-10,13 -6,8 0,8 C6,8 10,13 10,24Z"/>
+<rect fill="#DB8F13" x="-12.5" y="22" width="25" height="4.5" rx="2.2"/>
+<circle fill="#DB8F13" cx="0" cy="28.5" r="2.8"/>
+</g>
+<circle fill="#C33C76" cx="48.4" cy="190.3" r="7"/>
+</g></g>
+</g>
+<g data-rig="legl" data-pivot="82.9 213">
+<rect fill="#C33C76" x="80.3" y="186.8" width="5.2" height="23.2" rx="2.6"/>
+<ellipse fill="#C33C76" cx="82.9" cy="210" rx="12" ry="5.5"/>
+</g>
+<g data-rig="legr" data-pivot="117.1 213">
+<rect fill="#C33C76" x="114.5" y="186.8" width="5.2" height="23.2" rx="2.6"/>
+<ellipse fill="#C33C76" cx="117.1" cy="210" rx="12" ry="5.5"/>
+</g>
+</g></g>
+</svg>

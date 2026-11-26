@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240" role="img" aria-labelledby="t d">
+<title id="t">Juno the roseate spoonbill, cheer, Grades 3-5</title>
+<desc id="d">Juno, the spoonbill, raises both wings with eyes in happy arcs and lifts her bell high.</desc>
+<defs><clipPath id="ju35c-hd1"><circle cx="100" cy="101.5" r="25"/></clipPath></defs>
+<g id="juno-g35-cheer">
+<ellipse class="shadow" cx="100" cy="223" rx="44" ry="5.7" fill="#000" opacity="0.26"/>
+<g class="figure" transform="rotate(0 100 213)">
+<rect fill="#B23E70" x="82.4" y="183" width="5.2" height="27" rx="2.6"/>
+<ellipse fill="#B23E70" cx="85" cy="210" rx="12" ry="5.5"/>
+<rect fill="#B23E70" x="112.4" y="183" width="5.2" height="27" rx="2.6"/>
+<ellipse fill="#B23E70" cx="115" cy="210" rx="12" ry="5.5"/>
+<g class="limb limb-r" data-pivot="136.1 141">
+<path fill="#C94F86" d="M0,0 C11,7.6 11.6,32.8 0,42 C-11.6,32.8 -11,7.6 0,0Z" transform="translate(136.1 141) rotate(-140)"/>
+</g>
+<rect fill="#E2609A" x="89.5" y="101.5" width="21" height="29.5" rx="10.5"/>
+<path fill="#E2609A" d="M100,117 C130.2,117 142,135.3 142,157.7 C142,178.3 129.4,191 100,191 C70.6,191 58,178.3 58,157.7 C58,135.3 69.8,117 100,117Z"/>
+<ellipse fill="#F6B3CF" cx="100" cy="162.9" rx="26" ry="22.2"/>
+<path fill="#B23E70" d="M70.6,135 Q85.3,125 97.9,133 Q85.3,143 70.6,135Z"/>
+<circle fill="#E2609A" cx="100" cy="101.5" r="25"/>
+<g clip-path="url(#ju35c-hd1)"><ellipse cx="100" cy="114" rx="27.5" ry="15" fill="#F6B3CF" opacity="0.7"/></g>
+<g class="eye">
+<path d="M78.4,101.2 Q86,89.2 93.6,101.2" fill="none" stroke="#14213D" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g class="eye">
+<path d="M106.4,101.2 Q114,89.2 121.6,101.2" fill="none" stroke="#14213D" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<ellipse class="blush" cx="76.7" cy="107.8" rx="7" ry="4.8" fill="#FF9AB8" opacity="0.62"/>
+<ellipse class="blush" cx="123.3" cy="107.8" rx="7" ry="4.8" fill="#FF9AB8" opacity="0.62"/>
+<g class="bill" transform="translate(102 112) rotate(28)">
+<path fill="#F2D7A0" d="M-2,-4.6 L40,-3.2 C44,-10.1 55,-9.2 55,0 C55,9.2 44,10.1 40,3.2 L-2,4.6Z"/>
+<path d="M4.6,0 L42,0" fill="none" stroke="#C9A46A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+<path d="M6.9,4.1 Q18.4,10.1 29.9,4.1" fill="none" stroke="#C9A46A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g class="bell" transform="translate(48.4 78.8) rotate(-18) scale(1)">
+<path d="M0,0 L0,9" fill="none" stroke="#C98F55" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill="#E9A62A" d="M-10,24 C-10,13 -6,8 0,8 C6,8 10,13 10,24Z"/>
+<rect fill="#C4841A" x="-12.5" y="22" width="25" height="4.5" rx="2.2"/>
+<circle fill="#C4841A" cx="0" cy="28.5" r="2.8"/>
+<ellipse cx="-4.5" cy="15" rx="1.8" ry="4.5" fill="#fff" opacity="0.35"/>
+</g>
+<g class="limb limb-l" data-pivot="64.7 141">
+<path fill="#C94F86" d="M0,0 C11,7.9 11.6,34.3 0,44 C-11.6,34.3 -11,7.9 0,0Z" transform="translate(64.7 141) rotate(150)"/>
+</g>
+<path class="sparkle" d="M32,41 Q33.1,48.9 41,50 Q33.1,51.1 32,59 Q30.9,51.1 23,50 Q30.9,48.9 32,41Z" fill="#E9A62A"/>
+<path class="sparkle" d="M170,39 Q170.8,45.2 177,46 Q170.8,46.8 170,53 Q169.2,46.8 163,46 Q169.2,45.2 170,39Z" fill="#E9A62A"/>
+<path class="sparkle" d="M150,13 Q150.6,17.4 155,18 Q150.6,18.6 150,23 Q149.4,18.6 145,18 Q149.4,17.4 150,13Z" fill="#E9A62A"/>
+</g></g>
+</svg>

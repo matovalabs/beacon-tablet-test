@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240" role="img" aria-labelledby="t d">
+<title id="t">Marlo the brown pelican, oops, Grades 3-5</title>
+<desc id="d">Marlo, the pelican, scratches under his crest with a wing and a small wry look: a tricky one, not a problem.</desc>
+<defs><clipPath id="ma35o-hd1"><circle cx="100" cy="100.3" r="29"/></clipPath></defs>
+<g id="marlo-g35-oops">
+<ellipse class="shadow" cx="100" cy="223" rx="56" ry="7.3" fill="#000" opacity="0.26"/>
+<g class="figure" transform="rotate(4 100 213)">
+<rect fill="#3A70C4" x="74.5" y="195" width="5" height="15" rx="2.5"/>
+<ellipse fill="#F2C14E" cx="77" cy="209.5" rx="15" ry="7"/>
+<rect fill="#3A70C4" x="120.5" y="195" width="5" height="15" rx="2.5"/>
+<ellipse fill="#F2C14E" cx="123" cy="209.5" rx="15" ry="7"/>
+<g class="limb limb-l" data-pivot="53.2 141">
+<path fill="#3A70C4" d="M0,0 C12,8.3 12.6,35.9 0,46 C-12.6,35.9 -12,8.3 0,0Z" transform="translate(53.2 141) rotate(14)"/>
+</g>
+<path fill="#4F8FE6" d="M100,109 C137.4,109 152,133.8 152,164.2 C152,187 136.4,201 100,201 C63.6,201 48,187 48,164.2 C48,133.8 62.6,109 100,109Z"/>
+<ellipse fill="#A9C8F5" cx="100" cy="167.9" rx="33.3" ry="27.6"/>
+<g transform="rotate(-18 100 71.3)">
+<ellipse fill="#DCE8FB" cx="100" cy="66.3" rx="4.2" ry="9"/>
+</g>
+<g transform="rotate(6 100 71.3)">
+<ellipse fill="#DCE8FB" cx="100" cy="66.3" rx="4.2" ry="9"/>
+</g>
+<circle fill="#4F8FE6" cx="100" cy="100.3" r="29"/>
+<g clip-path="url(#ma35o-hd1)"><ellipse cx="100" cy="84.3" rx="31.9" ry="18" fill="#DCE8FB"/></g>
+<g class="eye">
+<circle fill="#FFFFFF" cx="85" cy="97.4" r="10.5"/>
+<circle cx="82.5" cy="99.4" r="5.9" fill="#14213D"/>
+<circle cx="80.5" cy="97.2" r="2.2" fill="#fff"/>
+<circle cx="85" cy="101.8" r="1" fill="#fff" opacity="0.9"/>
+</g>
+<g class="eye">
+<circle fill="#FFFFFF" cx="115" cy="97.4" r="10.5"/>
+<circle cx="112.5" cy="99.4" r="5.9" fill="#14213D"/>
+<circle cx="110.5" cy="97.2" r="2.2" fill="#fff"/>
+<circle cx="115" cy="101.8" r="1" fill="#fff" opacity="0.9"/>
+</g>
+<path d="M78.2,80.9 Q85,74.9 91.8,80.9" fill="none" stroke="#14213D" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" transform="rotate(0 85 79.4)"/>
+<path d="M108.7,85.9 Q115,79.9 121.3,85.9" fill="none" stroke="#14213D" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" transform="rotate(0 115 84.4)"/>
+<ellipse class="blush" cx="75" cy="107.4" rx="7" ry="4.8" fill="#FF9AA8" opacity="0.62"/>
+<ellipse class="blush" cx="125" cy="107.4" rx="7" ry="4.8" fill="#FF9AA8" opacity="0.62"/>
+<g class="bill" transform="translate(101 110.2) rotate(46)">
+<path fill="#F7DC92" d="M1,2.4 Q24.4,18.4 49.9,3.6Z"/>
+<path fill="#F2C14E" d="M-3,-8 Q29,-6.8 58,-1 Q64,2.4 57,6 L-3,4.8Z"/>
+<circle fill="#C99A1E" cx="57.5" cy="2.2" r="2.6"/>
+<path d="M6.4,-1 L47.6,1" fill="none" stroke="#C99A1E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+</g>
+<g class="limb limb-r" data-pivot="141.6 139">
+<path fill="#3A70C4" d="M0,0 C13,9 13.7,39 0,50 C-13.7,39 -13,9 0,0Z" transform="translate(141.6 139) rotate(-196)"/>
+</g>
+<g class="scale" transform="translate(45 174) scale(1)">
+<circle cx="0" cy="0" r="4" fill="none" stroke="#E9A62A" stroke-width="2.6"/>
+<rect fill="#C4841A" x="-1.5" y="3.5" width="3" height="9" rx="1.5"/>
+<path d="M-19,6.8 L-26,20.8 M-19,6.8 L-12,20.8" fill="none" stroke="#C4841A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill="#E9A62A" d="M-29,20.8 Q-19,29.8 -9,20.8Z"/>
+<path d="M19,19.2 L12,33.2 M19,19.2 L26,33.2" fill="none" stroke="#C4841A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill="#E9A62A" d="M9,33.2 Q19,42.2 29,33.2Z"/>
+<path d="M-19,6.8 L19,19.2" stroke="#E9A62A" stroke-width="3.4" stroke-linecap="round"/>
+<circle fill="#C4841A" cx="0" cy="13" r="3"/>
+</g>
+</g></g>
+</svg>
