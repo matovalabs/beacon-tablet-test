@@ -3,7 +3,7 @@
 // It stops when the grown-up turns movement off or the device asks for reduced motion.
 import { h, s } from './ui-dom.43bde315e2.js';
 import { character, characterSrc, button } from './ui-common.47dcda4ccf.js';
-import { sceneTree, HOME } from './ui-scenes.38fec87265.js';
+import { sceneTree, HOME } from './ui-scenes.75b5b27738.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
 import { CELEBRATE } from './text-copy.a37af2a234.js';
 import { path } from './engine-retention.c576d6d48c.js';
@@ -11,6 +11,8 @@ import { bandForGrade } from './engine-interests.ccd1f09d5a.js';
 import { RIGS } from './ui-rig-art.f289cd9f03.js';
 import { lookFor } from './engine-seasons.3b7f69fb10.js';
 import { localDay } from './engine-retention.c576d6d48c.js';
+import { MOOD_DRAWING } from './engine-motion.d51e006bfa.js';
+import { setMood, startBlinks, allowed } from './ui-guide-motion.4a4756add6.js';
 
 // Today's look: the season, or a holiday the grown-up switched on when today is in its window (section 17).
 // Read from the app's clock, so tests and screenshots can set the day.
@@ -39,10 +41,20 @@ export function stage(app, guide, { mood = 'idle', walk = true, cls = '' } = {})
   const moving = motionOn(app);
   const planted = !walk || guide === 'lumi' || bandForGrade(grade) === 'grades-6-8';
   const rig = !planted && mood === 'idle' && RIGS[bandForGrade(grade)] ? RIGS[bandForGrade(grade)][guide] || null : null;
-  const actor = { src: characterSrc(guide, mood, grade), beam: guide === 'lumi', guide, rig, band: bandForGrade(grade) };
+  // A guide shown in another mood (Lumi cheering on the summary) blends into it from rest (section 17.2).
+  const target = mood === 'idle' ? 'rest' : mood;
+  const blend = !rig && target !== 'rest' && MOOD_DRAWING[target] ? target : null;
+  const animate = !!blend && allowed(app, 'mood');
+  const from = animate ? 'rest' : blend;
+  const moods = blend ? { from, srcs: Object.fromEntries([...new Set([MOOD_DRAWING[from], MOOD_DRAWING[blend]])].map(d => [d, characterSrc(guide, d, grade)])) } : null;
+  const actor = { src: characterSrc(guide, mood, grade), beam: guide === 'lumi', guide, rig, band: bandForGrade(grade), moods };
   const look = lookToday(app);
-  return h('div', { class: `stage ${moving ? 'moving' : 'still'} ${planted ? 'planted' : `walking gait-${guide}`} ${cls}`.replace(/\s+/g, ' ').trim() },
+  const el = h('div', { class: `stage ${moving ? 'moving' : 'still'} ${planted ? 'planted' : `walking gait-${guide}`} ${cls}`.replace(/\s+/g, ' ').trim() },
     build(sceneTree(HOME[guide] || 'harbor', guide === 'lumi' && l ? path(l).unlocked : [], actor, look ? look.id : null)));
+  if (animate) setMood(app, el.querySelector('.mood-fig'), blend, { delay: 450 });
+  // Idle blinks on the rigged guides (their eyes are separate parts). Breathing is in the stylesheet.
+  if (rig) startBlinks(app, el);
+  return el;
 }
 
 export function hasClip(app, id) {

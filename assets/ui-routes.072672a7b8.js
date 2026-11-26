@@ -1,11 +1,11 @@
 // Hash routing: one id per screen. guard() returns the route to show instead, or null.
 import { h } from './ui-dom.43bde315e2.js';
 import { screen, button, confirmDialog, hasCheckin } from './ui-common.47dcda4ccf.js';
-import { welcome, addLearner, handoff, meet, sees, subjects, interests, checkinIntro, startingPoint } from './ui-screens-onboard.a7a1ad6cc3.js';
+import { welcome, addLearner, handoff, meet, sees, subjects, interests, checkinIntro, startingPoint } from './ui-screens-onboard.6f1116bf1e.js';
 import { nextCheckin } from './engine-subjects.ac0d8dc3f3.js';
-import { today, myInterests, who, quest, summary, startQuest, milestones } from './ui-screens-child.feb2c2e435.js';
-import { gate, grownup } from './ui-screens-grownup.5744b60cab.js';
-import { cliff } from './ui-rewards.9a85c3a757.js';
+import { today, myInterests, who, quest, summary, startQuest, milestones } from './ui-screens-child.32dd3ff69d.js';
+import { gate, grownup } from './ui-screens-grownup.221a575d55.js';
+import { cliff } from './ui-rewards.c7e0d83e5a.js';
 import { syncReminder } from './ui-reminder.9609cb1dba.js';
 import { BANNERS, GROWNUP } from './text-copy.a37af2a234.js';
 

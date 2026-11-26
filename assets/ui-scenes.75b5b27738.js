@@ -4,6 +4,7 @@
 // Animated parts only carry class names; the motion lives in styles.css and stops for reduced motion.
 
 import { accessoryTree, decorTree } from './ui-season-art.1512571c02.js';
+import { MOOD_DRAWING } from './engine-motion.d51e006bfa.js';
 
 const W = 400, H = 300;
 
@@ -236,7 +237,20 @@ export function wearOn(rig, acc) {
   return done ? out : rig;
 }
 
-function actorTree(name, { src, beam, guide, rig = null, look = null, band = 'grades-3-5' }) {
+// Breathing (section 17.2): the rigged body rises a little about its own base, inside the groups the walk
+// moves, so the legs and feet are not touched and stay planted.
+export function breathe(rig) {
+  let done = false;
+  const visit = node => {
+    if (!Array.isArray(node)) return node;
+    const [tag, attrs, ...kids] = node;
+    if (!done && tag === 'g' && attrs && attrs.class === 'rig-body-r') { done = true; return [tag, attrs, ['g', { class: 'rig-breathe' }, ...kids]]; }
+    return [tag, attrs, ...kids.map(visit)];
+  };
+  return visit(rig);
+}
+
+function actorTree(name, { src, beam, guide, rig = null, look = null, band = 'grades-3-5', moods = null }) {
   const g = GROUND[name] || GROUND.harbor;
   const w = ACTOR, hgt = ACTOR * 1.2, feet = hgt * ART_FEET;
   const [fl, fr] = FEET[guide] || [-10, 10];
@@ -244,10 +258,19 @@ function actorTree(name, { src, beam, guide, rig = null, look = null, band = 'gr
   // otherwise the art file is drawn as one picture.
   const acc = look ? accessoryTree(look, guide, band) : null;
   const toArt = `translate(${-w / 2} ${-feet}) scale(${w / 200})`;
+  const pic = href => ['image', { href, x: -w / 2, y: -feet, width: w, height: hgt, 'clip-path': 'url(#actor-feet)' }];
+  // A guide changing mood (section 17.2) has the drawings it needs stacked in a pose layer that stretches
+  // about the ground under it; the page cross-fades them (src/ui/guide-motion.js setMood).
+  const moodPic = moods => ['g', { class: 'mood-fig', 'data-mood': moods.from },
+    ['g', { class: 'mood-pose' }, ...Object.entries(moods.srcs).map(([d, href]) => {
+      const [tag, attrs] = pic(href);
+      return [tag, { ...attrs, class: `mood-art${MOOD_DRAWING[moods.from] === d ? ' on' : ''}`, 'data-art': d }];
+    })]];
   const art = rig
-    ? ['g', { 'clip-path': 'url(#actor-feet)' }, ['g', { transform: toArt }, wearOn(rig, acc)]]
-    : ['image', { href: src, x: -w / 2, y: -feet, width: w, height: hgt, 'clip-path': 'url(#actor-feet)' }];
+    ? ['g', { 'clip-path': 'url(#actor-feet)' }, ['g', { transform: toArt }, breathe(wearOn(rig, acc))]]
+    : ['g', { class: beam ? 'actor-still' : 'actor-breathe' }, moods ? moodPic(moods) : pic(src)];
   const drawing = ['g', { class: 'actor-squash' },
+    beam ? glowTree(LAMP.x * w, LAMP.y * hgt - feet) : null,
     beam ? beamTree(LAMP.x * w, LAMP.y * hgt - feet) : null, art,
     !rig && acc ? ['g', { transform: toArt }, acc] : null];
   return ['g', { transform: `translate(${g.x} ${g.y})` },
@@ -257,6 +280,14 @@ function actorTree(name, { src, beam, guide, rig = null, look = null, band = 'gr
       ['g', { class: 'actor-face' },
         ['g', { class: 'actor-lift' },
           at(fl, 'actor-reach', at(fl, 'actor-tilt-l', at(fr, 'actor-tilt-r', drawing)))]]]];
+}
+
+// Lumi's lantern glow: a soft halo behind her lantern that breathes slowly (section 17.2).
+function glowTree(x, y) {
+  return ['g', { transform: `translate(${x} ${y})` },
+    ['defs', {}, ['radialGradient', { id: 'lantern-glow' },
+      ['stop', { offset: 0, 'stop-color': '#FFE9A6', 'stop-opacity': 0.9 }], ['stop', { offset: 1, 'stop-color': '#FFD36E', 'stop-opacity': 0 }]]],
+    ['circle', { class: 'lumi-glow', cx: 0, cy: 0, r: 22, fill: 'url(#lantern-glow)' }]];
 }
 
 // Lumi's beam: a flat cone of light from her lantern out to the right, as in her clip. It sweeps from the lamp.

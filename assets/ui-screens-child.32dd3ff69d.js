@@ -1,15 +1,15 @@
 // C6 Today, My interests and subjects, Switch reader, and the quest run (section 7).
 import { h, s, icon, clear } from './ui-dom.43bde315e2.js';
-import { passageBody, wordCard, openWordHelp, stopVoice } from './ui-word-help.5d0299f616.js';
-import { stage, celebrate } from './ui-stage.36ac09a807.js';
+import { passageBody, wordCard, openWordHelp, stopVoice } from './ui-word-help.daad2e2693.js';
+import { stage, celebrate } from './ui-stage.209a5d3910.js';
 import { award } from './engine-milestones.5457152562.js';
 import { countReadingDay, keepsakeFor, newlyUnlocked, countReadHour } from './engine-retention.c576d6d48c.js';
 import { noteFinishedText } from './ui-reminder.9609cb1dba.js';
-import { peekIsland } from './ui-island.368c66ad57.js';
-import { weekCard, rewardsCard } from './ui-rewards.9a85c3a757.js';
+import { peekIsland } from './ui-island.479949d09d.js';
+import { weekCard, rewardsCard } from './ui-rewards.c7e0d83e5a.js';
 import { screen, eyebrow, button, character, topbar, progressBar, confirmDialog, interestLabel, topicLabel, hasCheckin } from './ui-common.47dcda4ccf.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
-import { interestEditor, subjectEditor } from './ui-screens-onboard.a7a1ad6cc3.js';
+import { interestEditor, subjectEditor } from './ui-screens-onboard.6f1116bf1e.js';
 import { TODAY, READ, DUMP, QUESTION, FEEDBACK, SUMMARY, SKILL_KID, SKILL_EYEBROW, C3, BANNERS, SUBJECTS_COPY, MILESTONES, CELEBRATE } from './text-copy.a37af2a234.js';
 import { chooseNext, applyFinishedQuest, levelOf, activeSubject, nextQuestNumber } from './engine-select.db0462b2de.js';
 import { QuestRun } from './engine-quest.22c99d238a.js';

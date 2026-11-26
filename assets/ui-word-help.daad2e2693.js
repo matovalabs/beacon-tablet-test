@@ -6,29 +6,34 @@
 // The design rules and their evidence are in docs/literacy-evidence.md. Nothing the child picks or
 // selects is stored: the quest keeps only a count of helper taps (section 8 of the logic spec).
 import { h, icon, clear } from './ui-dom.43bde315e2.js';
-import { button, character } from './ui-common.47dcda4ccf.js';
+import { button } from './ui-common.47dcda4ccf.js';
+import { talker, mouthWith } from './ui-guide-motion.4a4756add6.js';
 import { WORDS } from './text-copy.a37af2a234.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
 
 let player = null;
+let stopMouth = () => {};
 
 export function voiceOn(app) {
   return !!(app.store.state.settings && app.store.state.settings.voice);
 }
 
-function play(file, { rate = 1, onTime = null, onEnd = null } = {}) {
+// Plays one of the page's own recordings. With a talker (the helper's guide), its mouth opens with the voice
+// (src/ui/guide-motion.js): by loudness on the device, or a timed open and close if that cannot run.
+function play(file, { rate = 1, onTime = null, onEnd = null, app = null, mouth = null } = {}) {
   if (!file) return;
-  if (player) { player.pause(); player = null; }
+  stopVoice();
   const a = new Audio(`assets/audio/${file}`);
   a.playbackRate = rate;
   a.preservesPitch = true;
   if (onTime) a.addEventListener('timeupdate', () => onTime(a.currentTime, a.duration));
   a.addEventListener('ended', () => { if (onEnd) onEnd(); if (player === a) player = null; });
   player = a;
-  a.play().catch(() => { if (onEnd) onEnd(); });
+  stopMouth = app && mouth ? mouthWith(app, a, mouth) : () => {};
+  a.play().catch(() => { stopMouth(); if (onEnd) onEnd(); });
 }
 
-export function stopVoice() { if (player) { player.pause(); player = null; } }
+export function stopVoice() { stopMouth(); stopMouth = () => {}; if (player) { player.pause(); player = null; } }
 
 // Glossary entries for a passage. Falls back to the passage's own vocab list if none exist yet.
 export function glossaryFor(app, passage) {
@@ -96,9 +101,9 @@ function choicesFor(entry, entries) {
   return [...list.slice(spin), ...list.slice(0, spin)];
 }
 
-function speakBtn(app, label, file, opts) {
+function speakBtn(app, label, file, opts = {}) {
   if (!voiceOn(app) || !file) return null;
-  return h('button', { class: 'btn pill speak', type: 'button', onclick: () => play(file, opts) }, icon('sound'), label);
+  return h('button', { class: 'btn pill speak', type: 'button', onclick: () => play(file, { app, ...opts }) }, icon('sound'), label);
 }
 
 // The card. onClose is called by "Got it". Used in a dialog, and inline inside Look back.
@@ -109,7 +114,9 @@ export function wordCard(app, passage, entry, onClose, { guide = 'pip' } = {}) {
   const wrap = h('div', { class: 'helper' });
   const head = h('div', { class: 'helper-head' },
     h('div', {}, h('p', { class: 'eyebrow', text: WORDS.eyebrow }), h('h2', { class: 'helper-word', text: entry.w }), entry.pos ? h('p', { class: 'muted', text: entry.pos }) : null),
-    character(guide, 'think', grade, { decorative: true, cls: 'helper-pip' }));
+    talker(guide, grade, 'helper-pip'));
+  // The guide's mouth moves only while one of its recordings plays (never on its own).
+  const mouth = head.querySelector('.talker');
 
   const learn = (said = '') => {
     clear(wrap);
@@ -118,7 +125,7 @@ export function wordCard(app, passage, entry, onClose, { guide = 'pip' } = {}) {
     const slow = voiceOn(app) && entry.a ? h('button', {
       class: 'btn pill speak', type: 'button',
       onclick: () => play(entry.a, {
-        rate: 0.7,
+        rate: 0.7, app, mouth,
         onTime: (t, d) => { if (d) lightUp(Math.min(chips.length - 1, Math.floor((t / d) * chips.length))); },
         onEnd: () => lightUp(-1)
       })
@@ -130,12 +137,12 @@ export function wordCard(app, passage, entry, onClose, { guide = 'pip' } = {}) {
         h('p', { class: 'syls', 'aria-label': WORDS.syllablesLabel(entry.syl.length) }, chips),
         // Respellings help older readers; early readers see the real spelling and syllables only.
         entry.say && grade >= 3 ? h('p', { class: 'say-it' }, h('span', { class: 'muted', text: WORDS.sayIt + ' ' }), h('strong', { text: entry.say })) : null,
-        h('div', { class: 'speak-row' }, speakBtn(app, WORDS.hearIt, entry.a), slow),
+        h('div', { class: 'speak-row' }, speakBtn(app, WORDS.hearIt, entry.a, { mouth }), slow),
         // One phonics tip for early readers (grades 1 to 4), when the entry has one.
       entry.pattern && grade <= 4 ? h('p', { class: 'tip' }, h('strong', { text: WORDS.soundTip + ' ' }), entry.pattern) : null),
       sec(WORDS.whatItMeans,
         h('p', { class: 'helper-def', text: entry.def }),
-        h('div', { class: 'speak-row' }, speakBtn(app, WORDS.hearMeaning, entry.m)),
+        h('div', { class: 'speak-row' }, speakBtn(app, WORDS.hearMeaning, entry.m, { mouth })),
         h('p', { class: 'helper-ex' }, h('strong', { text: WORDS.fromText + ' ' }), `"${entry.ex}"`)),
       entry.syn && entry.syn.length ? sec(WORDS.wordsLikeThis, h('ul', { class: 'syn' }, entry.syn.map(s => h('li', { text: s })))) : null,
       entry.ant && entry.ant.length ? sec(WORDS.opposites, h('ul', { class: 'syn ant' }, entry.ant.map(s => h('li', { text: s })))) : null,
@@ -156,12 +163,12 @@ export function wordCard(app, passage, entry, onClose, { guide = 'pip' } = {}) {
   const pick = d => {
     const ok = d === entry.def;
     const line = ok ? 'Nice thinking. Here is what it means.' : 'Good try. Here is what it means.';
-    if (voiceOn(app)) play(app.data.PROMPT_AUDIO && app.data.PROMPT_AUDIO[line]);
+    if (voiceOn(app)) play(app.data.PROMPT_AUDIO && app.data.PROMPT_AUDIO[line], { app, mouth });
     learn(line);
   };
   wrap.append(head,
     h('div', { class: 'guess' },
-      h('div', { class: 'row-between' }, h('h3', { class: 'helper-h', text: WORDS.whatDoesItMean }), speakBtn(app, WORDS.hearQuestion, promptFile)),
+      h('div', { class: 'row-between' }, h('h3', { class: 'helper-h', text: WORDS.whatDoesItMean }), speakBtn(app, WORDS.hearQuestion, promptFile, { mouth })),
       h('p', { class: 'muted small', text: WORDS.guessHint }),
       h('div', { class: 'guess-list' }, choices.map(d => h('button', { class: 'guess-choice', type: 'button', onclick: () => pick(d) }, d))),
       button(WORDS.notSure, () => learn(), 'text'),

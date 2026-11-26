@@ -2,8 +2,8 @@
 // and Lumi's cliff with the keepsake shelf. Every reward is earned by reading; nothing is lost by a gap.
 import { h } from './ui-dom.43bde315e2.js';
 import { screen, topbar, button } from './ui-common.47dcda4ccf.js';
-import { stage, build } from './ui-stage.36ac09a807.js';
-import { keepsakeTree } from './ui-scenes.38fec87265.js';
+import { stage, build } from './ui-stage.209a5d3910.js';
+import { keepsakeTree } from './ui-scenes.75b5b27738.js';
 import { RETENTION } from './text-copy.a37af2a234.js';
 import { weekGoal, todaysKeepsake, shelf, path } from './engine-retention.c576d6d48c.js';
 

@@ -2803,3 +2803,54 @@ body.still .island-pill, body.still .island-panel, body.still .island-bg, body.s
 /* Grown-up Settings: the suggested reminder time. */
 .note.suggest { display: grid; gap: 8px; }
 .note.suggest p { margin: 0; }
+
+/* GUIDE MOTION (version 0.9, logic spec section 17.2): idle blinks, breathing, mood blends and the word
+   helper's mouth, made in code like a Rive state machine. Transform and opacity only. Moods blend over
+   --mood-ms (set by src/ui/guide-motion.js from src/engine/motion.js). Nothing here moves during a quest
+   except the helper's mouth while its voice plays, and nothing moves with movement off or reduced motion. */
+.mood-fig { position: relative; display: inline-block; }
+.mood-fig .mood-pose { position: absolute; inset: 0; transform-origin: 50% 100%; transition: transform var(--mood-ms, 300ms) ease-in-out; }
+.mood-fig img.mood-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.mood-fig .mood-art { opacity: 0; transition: opacity calc(var(--mood-ms, 300ms) * 0.6) ease-in calc(var(--mood-ms, 300ms) * 0.4); }
+.mood-fig .mood-art.on { opacity: 1; transition: opacity var(--mood-ms, 300ms) ease-out; }
+.mood-fig[data-mood="rest"] .mood-pose { transform: none; }
+.mood-fig[data-mood="happy"] .mood-pose { transform: scale(1, 1.02); }
+.mood-fig[data-mood="cheer"] .mood-pose { transform: scale(1, 1.04); }
+.mood-fig[data-mood="welcome"] .mood-pose { transform: rotate(3deg) scale(1, 1.03); }
+.mood-fig[data-mood="think"] .mood-pose { transform: rotate(-3deg); }
+.island-face.mood-fig { overflow: hidden; }
+.island-face.mood-fig img.mood-art { object-fit: cover; object-position: 50% 6%; }
+/* In a scene the pose stretches about the ground under the guide, and never leans (a lean there must turn
+   about one foot, section 17). */
+.stage .mood-fig, .stage .mood-pose, .stage .actor-breathe, .stage .actor-still { transform-box: view-box; transform-origin: 0 0; }
+.stage .mood-fig[data-mood="welcome"] .mood-pose { transform: scale(1, 1.03); }
+.stage .mood-fig[data-mood="think"] .mood-pose { transform: none; }
+/* Breathing: the rigged body (rig-breathe) or the whole drawing rises a little about its base. */
+.stage.moving .rig-breathe, .stage.moving .actor-breathe { animation: breathe 3600ms ease-in-out infinite; }
+@keyframes breathe {
+  0%, 100% { transform: scale(1, 1); }
+  50% { transform: scale(1, 1.015); }
+}
+/* Lumi's lantern glow breathes instead. */
+.stage .lumi-glow { transform-box: fill-box; transform-origin: 50% 50%; opacity: 0.35; }
+.stage.moving .lumi-glow { animation: lantern-breathe 3600ms ease-in-out infinite; }
+@keyframes lantern-breathe {
+  0%, 100% { opacity: 0.3; transform: scale(0.94); }
+  50% { opacity: 0.6; transform: scale(1.06); }
+}
+/* Blinks: the page adds .blink to the scene for a moment at uneven times. */
+.stage .eye { transform-box: fill-box; transform-origin: 50% 50%; transition: transform 70ms ease-in-out; }
+.stage.moving.blink .eye { transform: scale(1, 0.1); }
+/* The word helper's guide: prepared mouth shapes over the think drawing, swapped while the voice plays. */
+.talker { position: relative; display: inline-block; flex: none; }
+.talker .talker-art { display: block; width: 100%; height: auto; }
+.talker .mouth-layer { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.talker .mouth { opacity: 0; }
+.talker[data-mouth="1"] .mouth-1, .talker[data-mouth="2"] .mouth-2 { opacity: 1; }
+/* Off: during a quest moods never blend, and with movement off or reduced motion nothing moves except the helper's mouth while its voice plays. */
+body.in-quest .mood-fig .mood-pose, body.in-quest .mood-fig .mood-art,
+body.still .mood-fig .mood-pose, body.still .mood-fig .mood-art, body.still .stage .eye { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .mood-fig .mood-pose, .mood-fig .mood-art, .stage .eye { transition: none !important; }
+}
+/* END GUIDE MOTION */

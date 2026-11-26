@@ -8,10 +8,10 @@ import { STORAGE_KEY, TAB_KEY } from './engine-constants.3213d107a9.js';
 import { BANNERS } from './text-copy.a37af2a234.js';
 import { h, clear } from './ui-dom.43bde315e2.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
-import { celebrate, motionOn } from './ui-stage.36ac09a807.js';
-import { routes, guard } from './ui-routes.f37378b023.js';
+import { celebrate, motionOn } from './ui-stage.209a5d3910.js';
+import { routes, guard } from './ui-routes.072672a7b8.js';
 import { syncReminder, startSignals, pageHidden, pageShown } from './ui-reminder.9609cb1dba.js';
-import { renderIsland } from './ui-island.368c66ad57.js';
+import { renderIsland } from './ui-island.479949d09d.js';
 
 const storage = safeStorage(() => window.localStorage);
 const store = new Store(storage);

@@ -11,9 +11,10 @@ import { weekGoal, todaysKeepsake, localDay, guideMood, MOOD_ART, path } from '.
 import { activeSubject } from './engine-select.db0462b2de.js';
 import { subjectFor } from './engine-subjects.ac0d8dc3f3.js';
 import { QUEST_QUESTIONS } from './engine-constants.3213d107a9.js';
-import { keepsakeIcon } from './ui-rewards.9a85c3a757.js';
+import { keepsakeIcon } from './ui-rewards.c7e0d83e5a.js';
 import { markTree } from './ui-season-art.1512571c02.js';
-import { lookToday, build } from './ui-stage.36ac09a807.js';
+import { lookToday, build } from './ui-stage.209a5d3910.js';
+import { moodFigure, setMood } from './ui-guide-motion.4a4756add6.js';
 
 const SHOWN_ON = ['today', 'path', 'milestones', 'my-interests', 'quest', 'summary', 'start'];
 const PEEK_DELAY_MS = 400;
@@ -39,8 +40,17 @@ function dots(g, cls = 'island-dots') {
     Array.from({ length: g.goal }, (_, i) => h('span', { class: i < g.days ? 'dot on' : 'dot' })));
 }
 
+// A still face (the quiet pill on reading and question screens).
 function face(guide, mood, grade, cls = 'island-face') {
   return h('img', { class: cls, src: characterSrc(guide, MOOD_ART[mood], grade), alt: '', width: 200, height: 240, decoding: 'async' });
+}
+
+// A face that blends from rest into the guide's mood (section 17.2): on the pill as a screen opens, and in
+// the panel each time it opens (and back to rest when it closes). data-target is the mood to blend to.
+function moodFace(guide, mood, grade, cls) {
+  const f = moodFigure(guide, 'rest', grade, { cls });
+  f.setAttribute('data-target', mood);
+  return f;
 }
 
 // Opens or closes. Measures the pill and the panel first, so the panel's backdrop starts exactly at the
@@ -57,6 +67,8 @@ function setOpen(app, open, { focusPill = false } = {}) {
   el.style.setProperty('--island-sy', (pill.offsetHeight / hgt).toFixed(4));
   app.islandOpen = open;
   el.classList.toggle('open', open);
+  const art = panel.querySelector('.mood-fig');
+  if (art) setMood(app, art, open ? art.getAttribute('data-target') : 'rest', { delay: open ? 160 : 0 });
   pill.setAttribute('aria-expanded', open ? 'true' : 'false');
   if (focusPill) pill.focus();
 }
@@ -100,7 +112,7 @@ function panelLines(app, l, guide, guideName, mood, peek) {
     !peek.keepsake && !peek.unlocked.length ? h('p', { class: 'island-earned', text: RETENTION.pathDone(path(l).done) }) : null
   ] : [];
   return h('div', { class: 'island-content' },
-    h('div', { class: 'island-guide' }, face(guide, mood, l.grade, 'island-guide-art'), h('p', { class: 'island-mood', text: RETENTION.mood[mood](guideName) })),
+    h('div', { class: 'island-guide' }, moodFace(guide, mood, l.grade, 'island-guide-art'), h('p', { class: 'island-mood', text: RETENTION.mood[mood](guideName) })),
     earned,
     h('div', { class: 'island-week' }, dots(g, 'island-dots big'), h('p', { class: 'island-strong', text: RETENTION.islandWeekLong(g.days, g.goal) })),
     h('p', { class: 'island-muted', text: RETENTION.total(l.readingDays || 0) }),
@@ -139,7 +151,7 @@ export function renderIsland(app, routeName) {
     class: 'island-pill', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'island-panel',
     onclick: () => { stopPeek(); setOpen(app, !app.islandOpen); }
   },
-  face(S.guide, mood, l.grade),
+  moodFace(S.guide, mood, l.grade, 'island-face'),
   seasonMark(app),
   dots(g),
   h('span', { class: 'island-status', 'aria-hidden': 'true', text: RETENTION.islandWeek(g.days, g.goal) }),
@@ -149,6 +161,8 @@ export function renderIsland(app, routeName) {
     panelLines(app, l, S.guide, S.guideName, mood, peek));
   const live = h('div', { class: 'sr-only', 'aria-live': 'polite' });
   el.append(h('div', { class: 'island' }, pill, panel), live);
+  const pillFace = pill.querySelector('.mood-fig');
+  setMood(app, pillFace, mood, { delay: 350 });
 
   if (peek) {
     const note = [
