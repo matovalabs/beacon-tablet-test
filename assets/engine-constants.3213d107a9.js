@@ -25,7 +25,7 @@ export const CLOCK_SKEW_MS = 5000;
 export const STORAGE_KEY = 'beacon.test.v1';
 // Holds only a random tab id while a quest runs, so two tabs can pause each other (section 13).
 export const TAB_KEY = 'beacon.test.v1.tab';
-export const STATE_VERSION = 5;
+export const STATE_VERSION = 6;
 export const NOTICE_VERSION = 'T-2026-10-10';
 // The notice inside the iPad and Android apps (src/text/notice.js) has its own version.
 export const APP_NOTICE_VERSION = 'T-2026-10-21-app';

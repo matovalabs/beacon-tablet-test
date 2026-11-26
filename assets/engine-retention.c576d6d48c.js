@@ -6,7 +6,7 @@
 // - every finished text is a step on Lumi's path, and some steps add an item to her cliff (scenes.js).
 // No streak, no points, no ranks, no timer, no energy and no deadline.
 
-import { REMINDER_FIRST_HOUR, REMINDER_LAST_HOUR } from './engine-constants.eeb1484d47.js';
+import { REMINDER_FIRST_HOUR, REMINDER_LAST_HOUR } from './engine-constants.3213d107a9.js';
 
 export const WEEK_GOAL = 3;
 

@@ -1,11 +1,12 @@
 // The saved model: logic spec section 3. validateState rejects any field outside it.
-import { STATE_VERSION, MAX_LEARNERS, MAX_QUESTS, LEVEL_MIN, LEVEL_MAX, REMINDER_FIRST_HOUR, REMINDER_LAST_HOUR, REMINDER_DEFAULT_HOUR } from './engine-constants.eeb1484d47.js';
-import { readingDaysFrom, readHoursFrom, emptyReadHours, emptySignals, HOURS } from './engine-retention.093e30f79e.js';
-import { SUBJECT_IDS, ALL_SKILLS } from './engine-subjects.932f872442.js';
+import { STATE_VERSION, MAX_LEARNERS, MAX_QUESTS, LEVEL_MIN, LEVEL_MAX, REMINDER_FIRST_HOUR, REMINDER_LAST_HOUR, REMINDER_DEFAULT_HOUR } from './engine-constants.3213d107a9.js';
+import { readingDaysFrom, readHoursFrom, emptyReadHours, emptySignals, HOURS } from './engine-retention.c576d6d48c.js';
+import { SUBJECT_IDS, ALL_SKILLS } from './engine-subjects.ac0d8dc3f3.js';
+import { HOLIDAY_IDS, cleanHolidays } from './engine-seasons.3b7f69fb10.js';
 
 const KEYS = {
   state: ['version', 'consent', 'settings', 'learners', 'activeLearnerId'],
-  settings: ['motion', 'voice', 'reminder', 'signals'],
+  settings: ['motion', 'voice', 'reminder', 'signals', 'holidays'],
   signals: ['launches', 'reminderLedToRead', 'reminderNoRead', 'pendingReminderDay', 'uncleanExits', 'sessionOpen'],
   launches: ['reminder', 'icon'],
   reminder: ['on', 'hour', 'paused', 'unanswered', 'lastCounted'],
@@ -28,9 +29,10 @@ export function emptyState() {
 // reminder (apps only), off unless a grown-up turns it on. paused: the reminder turned itself off after
 // 7 days in a row with no reading; unanswered: that count so far; lastCounted: the last day counted.
 // signals: the come-back counts kept on this device only (section 19); counts, one day and booleans.
+// holidays: the ids of the holidays a grown-up switched on (section 17), none by default. Only the ids.
 export const defaultReminder = () => ({ on: false, hour: REMINDER_DEFAULT_HOUR, paused: false, unanswered: 0, lastCounted: null });
 export function defaultSettings() {
-  return { motion: true, voice: true, reminder: defaultReminder(), signals: emptySignals() };
+  return { motion: true, voice: true, reminder: defaultReminder(), signals: emptySignals(), holidays: [] };
 }
 
 export function newLearner(id, nick, grade) {
@@ -134,6 +136,8 @@ export function validateState(s) {
     if (exact(errors, 'settings.signals', g, KEYS.signals) && exact(errors, 'settings.signals.launches', g.launches, KEYS.launches) &&
       (!count(g.launches.reminder) || !count(g.launches.icon) || !count(g.reminderLedToRead) || !count(g.reminderNoRead) || !count(g.uncleanExits) ||
        !isBool(g.sessionOpen) || !(g.pendingReminderDay === null || (isStr(g.pendingReminderDay) && DAY.test(g.pendingReminderDay))))) errors.push('settings.signals is malformed');
+    const hs = s.settings.holidays;
+    if (!Array.isArray(hs) || !hs.every(id => HOLIDAY_IDS.includes(id)) || new Set(hs).size !== hs.length) errors.push('settings.holidays must be a list of known holiday ids');
   }
   if (s.consent !== null && exact(errors, 'consent', s.consent, KEYS.consent) && (!isStr(s.consent.at) || !isStr(s.consent.noticeVersion))) errors.push('consent is malformed');
   if (!Array.isArray(s.learners) || s.learners.length > MAX_LEARNERS) errors.push(`learners must be a list of at most ${MAX_LEARNERS}`);
@@ -145,17 +149,23 @@ export function validateState(s) {
 // Migration by version. Version 2 added subjects: version 1 data was all reading.
 export function migrate(raw) {
   if (raw && raw.version === STATE_VERSION) return raw;
+  // Version 6 added the chosen holidays (settings.holidays), none chosen: a holiday shows only after a
+  // grown-up switches it on. Everything else is kept as it was.
+  if (raw && raw.version === 5 && Array.isArray(raw.learners)) {
+    const old = raw.settings || {};
+    return { ...raw, version: 6, settings: { ...defaultSettings(), ...old, holidays: cleanHolidays(old.holidays) } };
+  }
   // Version 5 added the hour counts of finished texts (from the quests already saved, hour only) and the
   // reminder's pause: the saved reminder keeps its on and hour, and starts with nothing counted. It also
   // added the come-back counts (settings.signals), starting at 0.
   if (raw && raw.version === 4 && Array.isArray(raw.learners)) {
     const old = (raw.settings && raw.settings.reminder) || {};
-    return {
+    return migrate({
       ...raw,
       version: 5,
       settings: { ...defaultSettings(), ...(raw.settings || {}), reminder: { ...defaultReminder(), on: old.on === true, hour: Number.isInteger(old.hour) ? old.hour : defaultReminder().hour }, signals: emptySignals() },
       learners: raw.learners.map(l => ({ ...l, readHours: readHoursFrom(l && l.quests) }))
-    };
+    });
   }
   // Version 4 added reading days (counted from the quests already saved) and the daily reminder setting.
   if (raw && raw.version === 3 && Array.isArray(raw.learners)) {

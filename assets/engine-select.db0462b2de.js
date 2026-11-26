@@ -1,8 +1,8 @@
 // Choosing the next text: logic spec section 5, step by step.
 // chooseNext is pure: no clock, no randomness, no global state, and it never changes the learner.
-import { LEVEL_MIN, LEVEL_MAX, NEAR_LEVELS, MAX_QUESTS } from './engine-constants.eeb1484d47.js';
+import { LEVEL_MIN, LEVEL_MAX, NEAR_LEVELS, MAX_QUESTS } from './engine-constants.3213d107a9.js';
 import { activeTopics, interestForTopic } from './engine-topics.a6ddd9fc2b.js';
-import { bankFor, learnerSubjects } from './engine-subjects.932f872442.js';
+import { bankFor, learnerSubjects } from './engine-subjects.ac0d8dc3f3.js';
 
 // The learner's level in one subject. A subject with no level yet starts at the grade, clamped to 1 to 12.
 export function levelOf(learner, subject) {

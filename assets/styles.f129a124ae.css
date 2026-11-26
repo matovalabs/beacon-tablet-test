@@ -2560,6 +2560,16 @@ h4 { font-family: var(--heading); font-weight: 600; font-size: 1.05rem; margin: 
 .stage.moving .flag { animation: flutter 1.6s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: left center; }
 @keyframes flutter { from { transform: skewY(-6deg); } to { transform: skewY(6deg); } }
 .stage.moving .glow { animation: twinkle 4s ease-in-out infinite; }
+/* Seasons and holidays (section 17): gentle, transform and opacity only, only while the scene moves.
+   With movement off or reduced motion, everything stays where it is drawn. */
+.stage.moving .season-drift { animation: season-fall 14s linear infinite; }
+.stage.moving .season-drift.d1 { animation-delay: -3.5s; } .stage.moving .season-drift.d2 { animation-delay: -7s; } .stage.moving .season-drift.d3 { animation-delay: -10.5s; }
+@keyframes season-fall { 0% { transform: translate(0, -24px); opacity: 0; } 12% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translate(14px, 90px); opacity: 0; } }
+.stage.moving .season-float { animation: season-float 6s ease-in-out infinite alternate; }
+@keyframes season-float { from { transform: translateY(0); } to { transform: translateY(-3px); } }
+.stage.moving .season-flicker { animation: twinkle 5s ease-in-out infinite; }
+.stage.moving .season-flicker.f1 { animation-delay: 1.6s; } .stage.moving .season-flicker.f2 { animation-delay: 3.2s; }
+.stage.moving .season-spin > * { animation: twinkle 6s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
   .stage * { animation: none !important; }
 }
@@ -2599,6 +2609,9 @@ dialog.celebrate { text-align: center; }
 .select-ask:empty { display: none; }
 .ask-btn { margin-top: 4px; }
 .setting { align-items: flex-start; }
+.holiday-list { border: 0; margin: 0 0 8px; padding: 0; min-width: 0; }
+.holiday-list legend { font-weight: 800; padding: 0; margin-bottom: 4px; }
+.holiday-list .holiday { align-items: center; margin: 2px 0; }
 .setting .hint { margin-top: 2px; }
 
 /* Coming back (logic spec section 19): the weekly goal, keepsakes and Lumi's cliff. */
@@ -2738,6 +2751,7 @@ button.island-pill:active { transform: scale(0.97); }
   width: 34px; height: 34px; flex: none; border-radius: 50%; object-fit: cover; object-position: 50% 6%;
   background: var(--navy-surface); border: 1px solid var(--navy-line);
 }
+.island-mark { width: 16px; height: 16px; flex: none; }
 .island-dots { display: inline-flex; gap: 5px; }
 .island-dots .dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--amber); }
 .island-dots .dot.on { background: var(--amber); }

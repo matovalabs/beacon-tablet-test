@@ -1,9 +1,9 @@
 // Every sentence in the parent report: logic spec section 10, copied from the main kit's
 // 06-parent-reports.md sections 5, 6 and 12. Fixed text only. Nothing here is generated.
 // Pronouns: the nickname, or "they". Never "he" or "she".
-import { outcome } from './engine-levels.93a2487050.js';
-import { LONG_ABSENCE_MS, LEVEL_MAX, LEVEL_MIN, STRONG_AT } from './engine-constants.eeb1484d47.js';
-import { subjectFor } from './engine-subjects.932f872442.js';
+import { outcome } from './engine-levels.8b930186ac.js';
+import { LONG_ABSENCE_MS, LEVEL_MAX, LEVEL_MIN, STRONG_AT } from './engine-constants.3213d107a9.js';
+import { subjectFor } from './engine-subjects.ac0d8dc3f3.js';
 
 export const SKILL_NAMES = {
   central: 'Central idea',

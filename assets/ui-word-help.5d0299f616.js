@@ -6,8 +6,8 @@
 // The design rules and their evidence are in docs/literacy-evidence.md. Nothing the child picks or
 // selects is stored: the quest keeps only a count of helper taps (section 8 of the logic spec).
 import { h, icon, clear } from './ui-dom.43bde315e2.js';
-import { button, character } from './ui-common.e7d8dca41b.js';
-import { WORDS } from './text-copy.c9fa09135d.js';
+import { button, character } from './ui-common.47dcda4ccf.js';
+import { WORDS } from './text-copy.a37af2a234.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
 
 let player = null;

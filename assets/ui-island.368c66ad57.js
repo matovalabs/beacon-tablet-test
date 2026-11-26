@@ -5,13 +5,15 @@
 // it may open once, on the summary, for about 2.5 seconds to show what the text earned.
 // Motion is transform and opacity only, with CSS transitions so a tap can reverse it mid-way.
 import { h } from './ui-dom.43bde315e2.js';
-import { characterSrc } from './ui-common.e7d8dca41b.js';
-import { RETENTION, QUESTION } from './text-copy.c9fa09135d.js';
-import { weekGoal, todaysKeepsake, localDay, guideMood, MOOD_ART, path } from './engine-retention.093e30f79e.js';
-import { activeSubject } from './engine-select.50528d75d3.js';
-import { subjectFor } from './engine-subjects.932f872442.js';
-import { QUEST_QUESTIONS } from './engine-constants.eeb1484d47.js';
-import { keepsakeIcon } from './ui-rewards.ac30fa30de.js';
+import { characterSrc } from './ui-common.47dcda4ccf.js';
+import { RETENTION, QUESTION } from './text-copy.a37af2a234.js';
+import { weekGoal, todaysKeepsake, localDay, guideMood, MOOD_ART, path } from './engine-retention.c576d6d48c.js';
+import { activeSubject } from './engine-select.db0462b2de.js';
+import { subjectFor } from './engine-subjects.ac0d8dc3f3.js';
+import { QUEST_QUESTIONS } from './engine-constants.3213d107a9.js';
+import { keepsakeIcon } from './ui-rewards.9a85c3a757.js';
+import { markTree } from './ui-season-art.1512571c02.js';
+import { lookToday, build } from './ui-stage.36ac09a807.js';
 
 const SHOWN_ON = ['today', 'path', 'milestones', 'my-interests', 'quest', 'summary', 'start'];
 const PEEK_DELAY_MS = 400;
@@ -69,6 +71,13 @@ function listen(app) {
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && app.islandOpen) { stopPeek(); setOpen(app, false, { focusPill: true }); }
   });
+}
+
+// The season's or a chosen holiday's tiny mark (section 17). Decorative; never on reading or question screens.
+function seasonMark(app) {
+  const look = lookToday(app);
+  const t = look ? markTree(look.id) : null;
+  return t ? build(t) : null;
 }
 
 // Reading and question screens: a static count, no button, no movement. The top bar already says the same
@@ -131,6 +140,7 @@ export function renderIsland(app, routeName) {
     onclick: () => { stopPeek(); setOpen(app, !app.islandOpen); }
   },
   face(S.guide, mood, l.grade),
+  seasonMark(app),
   dots(g),
   h('span', { class: 'island-status', 'aria-hidden': 'true', text: RETENTION.islandWeek(g.days, g.goal) }),
   h('span', { class: 'sr-only', text: RETENTION.islandWeekLong(g.days, g.goal) }));

@@ -1,17 +1,19 @@
 // The Grown-up area: gate, Reports, Progress, Interests, Settings and privacy, Readers (section 12).
 import { h, s, icon } from './ui-dom.43bde315e2.js';
-import { screen, eyebrow, button, confirmDialog, formatDate, interestLabel, topicLabel, passageTitle, hasCheckin } from './ui-common.e7d8dca41b.js';
-import { interestEditor, subjectEditor, noticeView } from './ui-screens-onboard.9f26c01d0c.js';
-import { GATE, GROWNUP, T2, C3 } from './text-copy.c9fa09135d.js';
-import { buildReport, skillTotals, SKILL_NAMES, skillsFor, PROGRESS_HONEST, CLIPBOARD_LINE } from './text-report-text.22d8b7f676.js';
-import { subjectFor, learnerSubjects } from './engine-subjects.932f872442.js';
-import { levelOf } from './engine-select.50528d75d3.js';
-import { SUBJECTS_COPY, SETTINGS_MEDIA } from './text-copy.c9fa09135d.js';
-import { exportSummary } from './state-summary.b909dca5ef.js';
-import { checkNick, checkGrade, nickTaken } from './engine-nick.b48af625e5.js';
-import { changeGrade } from './engine-interests.16e5466d5f.js';
-import { MAX_LEARNERS, LEVEL_MAX } from './engine-constants.eeb1484d47.js';
-import { reminderSettings, syncReminder, stabilityNote } from './ui-reminder.d6e3842123.js';
+import { screen, eyebrow, button, confirmDialog, formatDate, interestLabel, topicLabel, passageTitle, hasCheckin } from './ui-common.47dcda4ccf.js';
+import { interestEditor, subjectEditor, noticeView } from './ui-screens-onboard.a7a1ad6cc3.js';
+import { GATE, GROWNUP, T2, C3 } from './text-copy.a37af2a234.js';
+import { buildReport, skillTotals, SKILL_NAMES, skillsFor, PROGRESS_HONEST, CLIPBOARD_LINE } from './text-report-text.0fe78f6419.js';
+import { subjectFor, learnerSubjects } from './engine-subjects.ac0d8dc3f3.js';
+import { levelOf } from './engine-select.db0462b2de.js';
+import { SUBJECTS_COPY, SETTINGS_MEDIA } from './text-copy.a37af2a234.js';
+import { exportSummary } from './state-summary.945388c85a.js';
+import { checkNick, checkGrade, nickTaken } from './engine-nick.3742f2f2b4.js';
+import { changeGrade } from './engine-interests.ccd1f09d5a.js';
+import { MAX_LEARNERS, LEVEL_MAX } from './engine-constants.3213d107a9.js';
+import { reminderSettings, syncReminder, stabilityNote } from './ui-reminder.9609cb1dba.js';
+import { HOLIDAYS_COPY } from './text-copy.a37af2a234.js';
+import { HOLIDAY_IDS, cleanHolidays } from './engine-seasons.3b7f69fb10.js';
 
 // The gate: a new multiplication each time. It stops a young child by accident; it is not security.
 function newSum() {
@@ -221,6 +223,7 @@ function settings(app) {
     h('h2', { text: SETTINGS_MEDIA.title }),
     toggle(app, 'motion', SETTINGS_MEDIA.motion, SETTINGS_MEDIA.motionHint),
     toggle(app, 'voice', SETTINGS_MEDIA.voice, SETTINGS_MEDIA.voiceHint),
+    holidaySettings(app),
     reminderSettings(app),
     stabilityNote(app),
     h('h2', { text: GROWNUP.summaryTitle }),
@@ -236,6 +239,27 @@ function settings(app) {
       app.lastQuest = null;
       app.go('welcome');
     }, 'danger'));
+}
+
+// Seasons and holidays (section 17): one checkbox per holiday, none ticked until the grown-up ticks it.
+// Saves only the list of chosen ids.
+function holidaySettings(app) {
+  const chosen = (app.store.state.settings && app.store.state.settings.holidays) || [];
+  const set = (id, on) => {
+    const now = new Set((app.store.state.settings.holidays) || []);
+    if (on) now.add(id); else now.delete(id);
+    app.save({ ...app.store.state, settings: { ...app.store.state.settings, holidays: cleanHolidays([...now]) } });
+  };
+  return h('section', { class: 'holiday-settings' },
+    h('h2', { text: HOLIDAYS_COPY.title }),
+    h('p', { text: HOLIDAYS_COPY.lead }),
+    h('fieldset', { class: 'holiday-list', 'aria-describedby': 'holiday-hint' },
+      h('legend', { text: HOLIDAYS_COPY.pick }),
+      h('p', { class: 'hint', id: 'holiday-hint', text: HOLIDAYS_COPY.pickHint }),
+      HOLIDAY_IDS.map(id => h('div', { class: 'consent setting holiday' },
+        h('input', { type: 'checkbox', id: `holiday-${id}`, checked: chosen.includes(id), onchange: e => set(id, e.target.checked) }),
+        h('label', { for: `holiday-${id}`, text: HOLIDAYS_COPY.names[id] })))),
+    h('p', { class: 'muted small', text: HOLIDAYS_COPY.later }));
 }
 
 function toggle(app, key, label, hint) {

@@ -366,6 +366,31 @@ export const SETTINGS_MEDIA = {
   voiceHint: 'The voice plays only when your child taps a sound button. The recordings are part of this page; nothing is sent anywhere.'
 };
 
+// Seasons and holidays (logic spec section 17). Plain names only; the looks are lights, lanterns and the like.
+export const HOLIDAYS_COPY = {
+  title: 'Seasons and holidays',
+  lead: 'The guides dress for the season on their own: a scarf in autumn, a warm hat in winter, flowers in spring and a sun hat in summer.',
+  pick: 'Holiday looks to show',
+  pickHint: 'All off until you switch one on. A chosen holiday replaces the season look for a few days around its date. Nothing changes on reading or question screens.',
+  later: 'Holidays with dates that move each year show through 2030.',
+  saved: 'Saved.',
+  names: {
+    'new-year': "New Year's Day",
+    'lunar-new-year': 'Lunar New Year',
+    valentines: "Valentine's Day",
+    'eid-al-fitr': 'Eid al-Fitr',
+    easter: 'Easter',
+    juneteenth: 'Juneteenth',
+    'july-4': 'Independence Day (July 4)',
+    diwali: 'Diwali',
+    halloween: 'Halloween',
+    thanksgiving: 'Thanksgiving (US)',
+    hanukkah: 'Hanukkah',
+    christmas: 'Christmas',
+    kwanzaa: 'Kwanzaa'
+  }
+};
+
 // Coming back (logic spec section 19). Rewards name the reading, never the child, and never mention a missed day.
 export const RETENTION = {
   weekTitle: 'This week',

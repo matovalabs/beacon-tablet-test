@@ -3,6 +3,8 @@
 // so the page can build it with the DOM and tools/render-stage.mjs can write the same picture as an SVG file.
 // Animated parts only carry class names; the motion lives in styles.css and stops for reduced motion.
 
+import { accessoryTree, decorTree } from './ui-season-art.1512571c02.js';
+
 const W = 400, H = 300;
 
 function stars(list) {
@@ -208,17 +210,46 @@ export const REACH = {
 // reach (Tally's sideways stretch, held at the left foot), tilt-l and tilt-r (lean on the left or the right foot),
 // squash (bends at the ground). Each lean group sits at its own foot, so it can only turn about that foot.
 const at = (x, cls, child) => ['g', { transform: `translate(${x} 0)` }, ['g', { class: cls }, ['g', { transform: `translate(${-x} 0)` }, child]]];
-function actorTree(name, { src, beam, guide, rig = null }) {
+// The seasonal or holiday accessory goes inside the rigged body (the group that rig-body-y and rig-body-r move,
+// in art units), so it moves with the head and body through every step. An unrigged drawing gets it on top of
+// the picture, in the same art units, inside the same moving groups.
+export function wearOn(rig, acc) {
+  if (!acc) return rig;
+  let done = false;
+  // Some rigged drawings are scaled about a point above the body (grades 1 to 2); the accessory is placed in
+  // the idle drawing's units, so that scale is undone around it.
+  const SCALE = /^translate\(([-\d.]+) ([-\d.]+)\) scale\(([\d.]+)\) translate\(/;
+  const visit = (node, scales) => {
+    if (!Array.isArray(node)) return node;
+    const [tag, attrs, ...kids] = node;
+    const m = attrs && typeof attrs.transform === 'string' ? attrs.transform.match(SCALE) : null;
+    const here = m ? [...scales, m] : scales;
+    if (!done && tag === 'g' && attrs && attrs.class === 'rig-body-r' && Array.isArray(kids[0])) {
+      done = true;
+      const [itag, iattrs, ...ikids] = kids[0];
+      const fitted = here.reduceRight((a, [, x, y, k]) => ['g', { transform: `translate(${x} ${y}) scale(${(1 / Number(k)).toFixed(4)}) translate(${-x} ${-y})` }, a], acc);
+      return [tag, attrs, [itag, iattrs, ...ikids, fitted], ...kids.slice(1)];
+    }
+    return [tag, attrs, ...kids.map(k => visit(k, here))];
+  };
+  const out = visit(rig, []);
+  return done ? out : rig;
+}
+
+function actorTree(name, { src, beam, guide, rig = null, look = null, band = 'grades-3-5' }) {
   const g = GROUND[name] || GROUND.harbor;
   const w = ACTOR, hgt = ACTOR * 1.2, feet = hgt * ART_FEET;
   const [fl, fr] = FEET[guide] || [-10, 10];
   // A rigged walking drawing (src/ui/rig-art.js) is drawn inline so each leg, arm and hand can move on its own;
   // otherwise the art file is drawn as one picture.
+  const acc = look ? accessoryTree(look, guide, band) : null;
+  const toArt = `translate(${-w / 2} ${-feet}) scale(${w / 200})`;
   const art = rig
-    ? ['g', { 'clip-path': 'url(#actor-feet)' }, ['g', { transform: `translate(${-w / 2} ${-feet}) scale(${w / 200})` }, rig]]
+    ? ['g', { 'clip-path': 'url(#actor-feet)' }, ['g', { transform: toArt }, wearOn(rig, acc)]]
     : ['image', { href: src, x: -w / 2, y: -feet, width: w, height: hgt, 'clip-path': 'url(#actor-feet)' }];
   const drawing = ['g', { class: 'actor-squash' },
-    beam ? beamTree(LAMP.x * w, LAMP.y * hgt - feet) : null, art];
+    beam ? beamTree(LAMP.x * w, LAMP.y * hgt - feet) : null, art,
+    !rig && acc ? ['g', { transform: toArt }, acc] : null];
   return ['g', { transform: `translate(${g.x} ${g.y})` },
     ['defs', {}, ['clipPath', { id: 'actor-feet' }, ['rect', { x: -w, y: -hgt - 10, width: 2 * w, height: hgt + 10.5 }]]],
     ['g', { class: 'actor-track' },
@@ -236,11 +267,13 @@ function beamTree(x, y) {
     ['polygon', { class: 'beam', points: '12,-4 420,-70 420,70 12,4', fill: 'url(#beam-fade)' }]];
 }
 
-// A scene with its unlocked cliff items (Lumi's only) and, when given, the guide standing in it.
-export function sceneTree(name, items = [], actor = null) {
+// A scene with its unlocked cliff items (Lumi's only), the season's or a chosen holiday's decorations when a
+// look is given, and, when given, the guide standing in it.
+export function sceneTree(name, items = [], actor = null, look = null) {
   const make = SCENES[name] || SCENES.harbor;
   return ['svg', { viewBox: `0 0 ${W} ${H}`, preserveAspectRatio: 'xMidYMax slice', class: `scene-bg scene-${name}`, 'aria-hidden': 'true', focusable: 'false' },
-    make(), ...items.filter(id => PATH_ITEMS[id]).map(id => PATH_ITEMS[id]()), actor ? actorTree(name, actor) : null];
+    make(), ...items.filter(id => PATH_ITEMS[id]).map(id => PATH_ITEMS[id]()), look ? decorTree(look, name) : null,
+    actor ? actorTree(name, { ...actor, look }) : null];
 }
 
 // Serializes a tree to SVG text (used by tools/render-stage.mjs, never by the page).

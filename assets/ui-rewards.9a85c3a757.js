@@ -1,11 +1,11 @@
 // Coming back (logic spec section 19): the weekly goal on Today, the card after a quest or check-in,
 // and Lumi's cliff with the keepsake shelf. Every reward is earned by reading; nothing is lost by a gap.
 import { h } from './ui-dom.43bde315e2.js';
-import { screen, topbar, button } from './ui-common.e7d8dca41b.js';
-import { stage, build } from './ui-stage.c3887dbf84.js';
-import { keepsakeTree } from './ui-scenes.44831deef9.js';
-import { RETENTION } from './text-copy.c9fa09135d.js';
-import { weekGoal, todaysKeepsake, shelf, path } from './engine-retention.093e30f79e.js';
+import { screen, topbar, button } from './ui-common.47dcda4ccf.js';
+import { stage, build } from './ui-stage.36ac09a807.js';
+import { keepsakeTree } from './ui-scenes.38fec87265.js';
+import { RETENTION } from './text-copy.a37af2a234.js';
+import { weekGoal, todaysKeepsake, shelf, path } from './engine-retention.c576d6d48c.js';
 
 export const keepsakeIcon = (id, cls = 'keepsake') => build(keepsakeTree(id, cls));
 

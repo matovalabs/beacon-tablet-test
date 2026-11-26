@@ -1,18 +1,18 @@
 // T1 to T3 for the grown-up, then C1, C2, subjects, C3 interests, the check-in intro and C5 for the child.
 import { h, icon } from './ui-dom.43bde315e2.js';
-import { screen, eyebrow, button, character, topbar } from './ui-common.e7d8dca41b.js';
-import { T1, T2, T3, C1, C2, C3, CHECKIN, C5, SKILL_KID, SUBJECTS_COPY } from './text-copy.c9fa09135d.js';
-import { noticeBlocks, NOTICE_TITLE, CONSENT_LABEL, noticeVersion, storageLine } from './text-notice.83762c01db.js';
-import { MAX_LEARNERS, INTEREST_MAX } from './engine-constants.eeb1484d47.js';
-import { checkNick, checkGrade, nickTaken } from './engine-nick.b48af625e5.js';
-import { newLearner } from './state-model.f0a01925b1.js';
-import { bandForGrade, bandList, toggle, pickStatus, setInterests, canAdd } from './engine-interests.16e5466d5f.js';
-import { focusSkill } from './text-report-text.22d8b7f676.js';
-import { SUBJECT_IDS, subjectFor, nextCheckin, learnerSubjects } from './engine-subjects.932f872442.js';
-import { activeSubject } from './engine-select.50528d75d3.js';
-import { stage, clip, hasClip, motionOn } from './ui-stage.c3887dbf84.js';
-import { award } from './engine-milestones.b99300f35d.js';
-import { rewardsCard } from './ui-rewards.ac30fa30de.js';
+import { screen, eyebrow, button, character, topbar } from './ui-common.47dcda4ccf.js';
+import { T1, T2, T3, C1, C2, C3, CHECKIN, C5, SKILL_KID, SUBJECTS_COPY } from './text-copy.a37af2a234.js';
+import { noticeBlocks, NOTICE_TITLE, CONSENT_LABEL, noticeVersion, storageLine } from './text-notice.42bf84bf5c.js';
+import { MAX_LEARNERS, INTEREST_MAX } from './engine-constants.3213d107a9.js';
+import { checkNick, checkGrade, nickTaken } from './engine-nick.3742f2f2b4.js';
+import { newLearner } from './state-model.434db42c3d.js';
+import { bandForGrade, bandList, toggle, pickStatus, setInterests, canAdd } from './engine-interests.ccd1f09d5a.js';
+import { focusSkill } from './text-report-text.0fe78f6419.js';
+import { SUBJECT_IDS, subjectFor, nextCheckin, learnerSubjects } from './engine-subjects.ac0d8dc3f3.js';
+import { activeSubject } from './engine-select.db0462b2de.js';
+import { stage, clip, hasClip, motionOn } from './ui-stage.36ac09a807.js';
+import { award } from './engine-milestones.5457152562.js';
+import { rewardsCard } from './ui-rewards.9a85c3a757.js';
 
 export function noticeView(app, headingLevel = 'h2') {
   return h('div', { class: 'notice' },

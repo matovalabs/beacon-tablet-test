@@ -4,13 +4,13 @@
 // Version 0.7: kind sentences that take turns, a suggested time from the hours texts are finished (the
 // grown-up taps to use it), a pause after a week of reminders with no reading, and the come-back counts.
 import { h } from './ui-dom.43bde315e2.js';
-import { REMINDER, STABILITY } from './text-copy.c9fa09135d.js';
-import { REMINDER_FIRST_HOUR, REMINDER_LAST_HOUR } from './engine-constants.eeb1484d47.js';
+import { REMINDER, STABILITY } from './text-copy.a37af2a234.js';
+import { REMINDER_FIRST_HOUR, REMINDER_LAST_HOUR } from './engine-constants.3213d107a9.js';
 import {
   localDay, readingDaySet, reminderTick, reminderOn, reminderSentenceIndex, suggestedHour,
   deviceScore, pauseAfter, SCORE_LOW, startSession, endSession, recordLaunch, settleReminder
-} from './engine-retention.093e30f79e.js';
-import { defaultSettings } from './state-model.f0a01925b1.js';
+} from './engine-retention.c576d6d48c.js';
+import { defaultSettings } from './state-model.434db42c3d.js';
 
 function bridge() {
   const handlers = globalThis.webkit && globalThis.webkit.messageHandlers;

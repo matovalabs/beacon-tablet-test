@@ -1,17 +1,17 @@
 // Boot: storage, routing, and the page-level listeners for the attention signals.
 // Signals are recorded only while a quest runs (Telemetry ignores them otherwise).
 import { BANK, INTERESTS, TOPIC_MAP, SITE, SUBJECTS_AVAILABLE, GLOSSARY, PROMPT_AUDIO, MEDIA } from './data.5b9c6d5db4.js';
-import { Store, safeStorage } from './state-store.e3beb3fc2a.js';
-import { Telemetry } from './engine-telemetry.ed1b899285.js';
+import { Store, safeStorage } from './state-store.95498c59c6.js';
+import { Telemetry } from './engine-telemetry.12a1da635d.js';
 import { systemClock } from './engine-clock.cb87acb031.js';
-import { STORAGE_KEY, TAB_KEY } from './engine-constants.eeb1484d47.js';
-import { BANNERS } from './text-copy.c9fa09135d.js';
+import { STORAGE_KEY, TAB_KEY } from './engine-constants.3213d107a9.js';
+import { BANNERS } from './text-copy.a37af2a234.js';
 import { h, clear } from './ui-dom.43bde315e2.js';
 import { openLayer, closeLayer } from './ui-layer.bb980036ff.js';
-import { celebrate, motionOn } from './ui-stage.c3887dbf84.js';
-import { routes, guard } from './ui-routes.b059151e6c.js';
-import { syncReminder, startSignals, pageHidden, pageShown } from './ui-reminder.d6e3842123.js';
-import { renderIsland } from './ui-island.075eb56acc.js';
+import { celebrate, motionOn } from './ui-stage.36ac09a807.js';
+import { routes, guard } from './ui-routes.f37378b023.js';
+import { syncReminder, startSignals, pageHidden, pageShown } from './ui-reminder.9609cb1dba.js';
+import { renderIsland } from './ui-island.368c66ad57.js';
 
 const storage = safeStorage(() => window.localStorage);
 const store = new Store(storage);
